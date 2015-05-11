@@ -20,6 +20,7 @@ angular.module('sol', ['ionic'])
 
 .config(function($stateProvider, $urlRouterProvider){
     $stateProvider
+    /*
     .state('marsWeather', {
         url: '/mars',
         views: {
@@ -29,16 +30,24 @@ angular.module('sol', ['ionic'])
             }
         }
     })
-    //$urlRouterProvider.otherwise('/mars');
+    */
+    .state('marsWeather', {
+        url: '/mars',
+        templateUrl: 'templates/marsweather.html',
+        controller: 'MarsWeatherController',
+    })
+    $urlRouterProvider.otherwise('/mars');
 })
 
-.controller('MarsWeatherController', ['$scope', '$http',
-  function($scope, $http){
-    $http.get('http://marsweather.ingenology.com/v1/latest/?format=jsonp')
-    .success(function(data){
-        $scope.marsWeather = data;
-        console.log(data);
-    });
+.controller('MarsWeatherController', ['$scope', '$http', function ($scope, $http) {
+
+    $scope.getWeatherData = function() {
+        $http.jsonp('http://marsweather.ingenology.com/v1/latest?format=jsonp&callback=JSON_CALLBACK')
+        .success(function(data){
+            // $scope.marsWeather = data;
+            console.log(data.report);
+        });
+    };
 }]);
 
 /*
