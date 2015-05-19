@@ -1,0 +1,30 @@
+<ion-pane class="{{active}}" ng-init="getWeatherData()">
+    <a ng-click="toggleEarth()"  class="earthPlanet"></a>
+    <a ui-sref="settings" class="moonPlanet"></a>
+    <a ng-click="toggleMars()" class="marsPlanet"></a>
+    <div id="mars" class="weather">
+        <h1><img src="img/mars_heading@2x.png"></h1>
+        <h2 ng-show="marsWeatherError" class="ng-hide">{{marsWeatherError}}</h2>
+        <h2><i class="ion-arrow-up-c"></i>{{marsWeather.max_temp_fahrenheit}} / <i class="ion-arrow-down-c"></i>{{marsWeather.min_temp_fahrenheit}} {{marsWeather.terrestrial_date}}
+        </h2>
+        <div class="data">
+            <div><img src="img/date_icon_red@2x.png"><span class="left">SOL DATE</span><span class="right">{{marsWeather.terrestrial_date}}</span></div>
+            <div><img src="img/season_icon_red@2x.png"><span class="left">SEASON</span><span class="right">{{marsWeather.season}}</span></div>
+            <div><img src="img/pressure_icon_red@2x.png"><span class="left">ATMOSPHERIC PRESSURE</span><span class="right">{{marsWeather.pressure}}</span></div>
+            <div><img src="img/sharing_icon_red@2x.png"><span class="left">SOCIAL SHARING</span><span class="right"><img src="img/facebook_icon@2x.png"> <img src="img/twitter_icon@2x.png"></span></div>
+        </div>
+    </div>
+    <div id="earth" class="weather">
+        <h1><img src="img/earth_heading@2x.png"></h1>
+        <h2 ng-show="earthWeatherError" class="ng-hide">{{earthWeatherError}}</h2>
+        <h2><i class="ion-arrow-up-c"></i>{{earthWeather.temp_max}} / <i class="ion-arrow-down-c"></i>{{earthWeather.temp_min}} 
+        </h2>
+        <div class="data">
+            <div><img src="img/location_icon@2x.png"><span class="left">YOUR CITY</span><span class="right"><button class="button">edit</button></span></div>
+            <div><img src="img/date_icon@2x.png"><span class="left">TERRESTERAL DATE</span><span class="right">hi</span></div>
+            <div><img src="img/humidity_icon@2x.png"><span class="left">HUMIDITY</span><span class="right">{{earthWeather.humidity}}</span></div>
+            <div><img src="img/pressure_icon@2x.png"><span class="left">ATMOSPHERIC PRESSURE</span><span class="right">{{earthWeather.pressure}}</span></div>
+            <div><img src="img/sharing_icon@2x.png"><span class="left">SOCIAL SHARING</span><span class="right"><img src="img/facebook_icon@2x.png"> <img src="img/twitter_icon@2x.png"></span></div>
+        </div>
+    </div>
+</ion-pane>
