@@ -1,0 +1,34 @@
+<ion-modal-view>
+<div id="settings" class="list list-inset">
+    <h1 class="ion-gear-a" data-pack="default" data-tags="settings, options, cog"> Settings <a class="ion-close-round" data-pack="default" data-tags="delete, trash, kill, x" href="/"></a></h1>
+    <div>
+        <h2>Temperature Scale</h2>
+        <p>Choose imperial or metric.</p>
+        <div class="button-bar">
+            <a class="button" ng-class="{'button-dark': isTempScale('Farenheit')}" ng-click="setTempScale('Farenheit')">Farenheit</a>
+            <a class="button" ng-class="{'button-dark': isTempScale('Celsius')}" ng-click="setTempScale('Celsius')">Celsius</a>
+        </div>
+        <br><br>
+        <h2>Current Location</h2>
+        <p>Choose how you will show location.</p>
+            <div class="button-bar">
+                <a class="button" ng-class="{'button-dark': isLocator('device')}" ng-click="setLocator('device')">Device GPS</a>
+                <a class="button" ng-class="{'button-dark': isLocator('zip')}" ng-click="setLocator('zip')">Zip Code</a>
+            </div>
+        <form id="zipCodeForm" ng-hide="Locator != 'zip'" class="ng-hide" name="zipCodeForm">
+            <input type="number"
+                   name="zipCode"
+                   ng-model="zipCode"
+                   ng-minlength="5"
+                   ng-maxlength="5"
+                   placeholder="Enter zipcode"
+                   ng-change='setZipCode()'
+                   >
+            <div ng-messages="zipCodeForm.zipCode.$error" style="color:maroon" role="alert">
+                <div ng-message="maxlength">Just 5 digits please.</div>
+                <div ng-message="number">Numbers only please.</div>
+            </div>
+        </form>
+    </div>
+</div>
+</ion-modal-view>

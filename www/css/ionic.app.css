@@ -7680,3 +7680,157 @@ a.button {
   background-size: cover;
   background-repeat: no-repeat;
   height: 100%; }
+
+.earthPlanet, .marsPlanet, .moonPlanet {
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute; }
+
+.earthPlanet {
+  background-image: url(../img/earth@2x.png); }
+
+.moonPlanet {
+  background-image: url(../img/moon@2x.png); }
+
+.marsPlanet {
+  background-image: url(../img/mars@2x.png); }
+
+@media (max-width: 767px) {
+  .earthPlanet, .marsPlanet {
+    width: 100vw;
+    height: 100vw; }
+  .earthPlanet {
+    top: -70vw; }
+  .moonPlanet {
+    width: 20vw;
+    height: 20vw;
+    top: 50vw;
+    left: 60vw; }
+  .marsPlanet {
+    bottom: -70vw; } }
+
+@media (min-width: 768px) {
+  .earthPlanet, .marsPlanet {
+    width: 50vw;
+    height: 50vw;
+    left: 25vw; }
+  .earthPlanet {
+    top: -34vw; }
+  .moonPlanet {
+    width: 8vw;
+    height: 8vw;
+    top: 50vw;
+    left: 60vw; }
+  .marsPlanet {
+    bottom: -34vw; } }
+
+.item {
+  background: transparent;
+  border: none; }
+
+.weather {
+  background: #000f16;
+  position: absolute;
+  z-index: 2; }
+  .weather h1, .weather h2 {
+    text-align: center;
+    font-size: 24px; }
+  .weather h1 {
+    border: 1px solid #b8bbbd;
+    border-right: none;
+    border-left: none;
+    margin-top: 19px;
+    padding: 24px 16px 14px; }
+    .weather h1 img {
+      width: 80%;
+      max-width: 500px;
+      margin: 2px auto; }
+  .weather h2 {
+    padding: 12px; }
+  .weather#mars {
+    top: -100%;
+    transition: top .4s ease-in-out;
+    -webkit-transition: top .4s ease-in-out; }
+    .weather#mars h2 {
+      color: #e08b77; }
+    .marsActive .weather#mars {
+      top: 0; }
+  .weather#earth {
+    bottom: -100%;
+    transition: bottom .4s ease-in-out;
+    -webkit-transition: bottom .4s ease-in-out; }
+    .weather#earth h2 {
+      color: #289bbc; }
+    .earthActive .weather#earth {
+      bottom: 0; }
+  .weather button {
+    background: #31b8a3;
+    color: white;
+    text-transform: uppercase;
+    border: none;
+    padding: 0;
+    height: 40px;
+    min-width: 62px;
+    margin-top: -10px;
+    min-height: inherit; }
+
+.data {
+  color: #c4c3c3;
+  text-transform: uppercase; }
+  .data div {
+    background: #13262E;
+    margin: 6px 0 0;
+    padding: 7px 20px;
+    width: 100%;
+    overflow: hidden; }
+    .data div img {
+      float: left;
+      width: 40px;
+      margin: 0px 16px 0 -8px; }
+    .data div span {
+      margin-top: 10px; }
+      .data div span.left {
+        float: left; }
+      .data div span.right {
+        text-align: right;
+        float: right; }
+        .data div span.right img {
+          margin: -10px 0 0 8px;
+          width: 38px; }
+
+#settings {
+  color: #c4c3c3;
+  background: transparent; }
+  #settings > div {
+    padding: 1.5em; }
+  #settings h1, #settings h2 {
+    text-transform: uppercase;
+    font-family: HelveticaNeue, Roboto-Light, sans-serif;
+    color: #c4c3c3; }
+  #settings h1 {
+    font-size: 2em;
+    background: #181b1b;
+    padding: .5em; }
+    #settings h1 a {
+      color: #c4c3c3;
+      text-decoration: none;
+      display: inline-block;
+      float: right; }
+  #settings h2 {
+    border: 1px solid #b8bbbd;
+    border-right: none;
+    border-left: none;
+    margin-top: 19px;
+    font-size: 1.5em;
+    padding: 16px 0 14px; }
+  #settings form {
+    clear: both;
+    margin-top: 1.4em;
+    float: right; }
+  #settings input {
+    background: #1f2a30;
+    padding-left: 1em;
+    text-align: center;
+    color: #c4c3c3; }
+  #settings a.button.button-dark {
+    background-color: #31b8a3; }

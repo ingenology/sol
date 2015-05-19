@@ -27,3 +27,193 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
     background-repeat: no-repeat;
     height: 100%;
 }
+.earthPlanet, .marsPlanet, .moonPlanet {
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+}
+.earthPlanet {
+    background-image: url(../img/earth@2x.png);
+}
+.moonPlanet {
+    background-image: url(../img/moon@2x.png);
+}
+.marsPlanet {
+    background-image: url(../img/mars@2x.png);
+}
+@media (max-width: 767px) {
+    .earthPlanet, .marsPlanet {
+        width: 100vw;
+        height: 100vw;
+    }
+    .earthPlanet {
+        top: -70vw;
+    }
+    
+    .moonPlanet {
+        width: 20vw;
+        height: 20vw;
+        top: 50vw;
+        left: 60vw;
+    }
+    .marsPlanet {
+        bottom: -70vw;
+    }
+}
+@media (min-width: 768px) {
+    .earthPlanet, .marsPlanet {
+        width: 50vw;
+        height: 50vw;
+        left: 25vw;
+    }
+    .earthPlanet {
+        top: -34vw;
+    }
+    .moonPlanet {
+        width: 8vw;
+        height: 8vw;
+        top: 50vw;
+        left: 60vw;
+    }
+    .marsPlanet {
+        bottom: -34vw;
+    }
+}
+.item {
+    background: transparent;
+    border:none;
+}
+// weather data
+.weather {
+    background: #000f16;
+    position: absolute;
+    z-index: 2;
+    h1, h2 {
+        text-align: center;
+        font-size: 24px;
+    }
+    h1 {
+        border: 1px solid #b8bbbd;
+        border-right: none;
+        border-left: none;
+        margin-top: 19px;
+        padding: 24px 16px 14px;
+        img {
+            width: 80%;
+            max-width: 500px;
+            margin: 2px auto;
+        }
+    }
+    h2 {
+        padding: 12px;
+    }
+    &#mars {
+        top: -100%;
+        transition: top .4s ease-in-out;
+        -webkit-transition: top .4s ease-in-out;
+        h2 {
+            color: #e08b77;
+        }
+        .marsActive & {
+            top: 0;
+        }
+    }
+    &#earth {
+        bottom: -100%;
+        transition: bottom .4s ease-in-out;
+        -webkit-transition: bottom .4s ease-in-out;
+        h2 {
+            color: #289bbc;
+        }
+        .earthActive & {
+            bottom: 0;
+        }
+    }
+    button {
+        background: #31b8a3;
+        color: white;
+        text-transform: uppercase;
+        border: none;
+        padding: 0;
+        height: 40px;
+        min-width: 62px;
+        margin-top: -10px;
+        min-height: inherit;
+    }
+}
+.data {
+    color: #c4c3c3;
+    text-transform: uppercase;
+    div {
+        background: #13262E;
+        margin: 6px 0 0;
+        padding: 7px 20px;
+        width: 100%;
+        overflow: hidden;
+        img {
+            float:left;
+            width: 40px;
+            margin: 0px 16px 0 -8px;
+        }
+        span {
+            margin-top: 10px;
+            &.left {
+                float:left;
+            }
+            &.right {
+                text-align: right;
+                float:right;
+                img {
+                    margin: -10px 0 0 8px;
+                    width: 38px;
+                }
+            }
+        }
+    }
+}
+// settings
+#settings {
+    color: #c4c3c3;
+    background: transparent;
+    > div {
+        padding: 1.5em;
+    }
+    h1, h2 {
+        text-transform: uppercase;
+        font-family: HelveticaNeue, Roboto-Light, sans-serif;
+        color: #c4c3c3;
+    }
+    h1 {
+        font-size: 2em;
+        background: #181b1b;
+        padding: .5em;
+        a {
+            color: #c4c3c3;
+            text-decoration: none;
+            display: inline-block; 
+            float:right;
+        }
+    }
+    h2 {
+        border: 1px solid #b8bbbd;
+        border-right: none;
+        border-left: none;
+        margin-top: 19px;
+        font-size: 1.5em;
+        padding: 16px 0 14px;
+    }
+    form {
+        clear:both; 
+        margin-top: 1.4em; 
+        float:right;
+    }
+    input {
+        background: #1f2a30;
+        padding-left: 1em;
+        text-align: center;
+        color: #c4c3c3;
+    }
+    a.button.button-dark {
+        background-color: #31b8a3;
+    }
+}
