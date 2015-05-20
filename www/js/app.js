@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('sol', ['ionic', 'ngMessages'])
+angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -33,7 +33,7 @@ angular.module('sol', ['ionic', 'ngMessages'])
     $urlRouterProvider.otherwise('/');
 })
 
-.controller('PlanetsController', ['$location', '$scope', '$http', function ($location, $scope, $http) {
+.controller('PlanetsController', ['$location', '$scope', '$http', 'Factories', function ($location, $scope, $http, Factories) {
     
     $scope.active = '';
     
@@ -73,29 +73,26 @@ angular.module('sol', ['ionic', 'ngMessages'])
     };
     
     $scope.getEarthWeatherData = function() {
+        
+        // if geo, then get lat and long and do the weather
+        // if window, then do the weather
+        // else go to settings screen
+/*
+        if (1 == 2) {
+            var lat = 39.0997;
+            var lng = 94.5783;
+        } else
+*/
+
         if (window.localStorage['lat'] && window.localStorage['lng']) {
             var lat = window.localStorage['lat'];
             var lng = window.localStorage['lng'];
-            var temp = {};
-            $http.jsonp('http://api.openweathermap.org/data/2.5/forecast/daily?lat='+lat+'&lon='+lng+'&units='+$scope.tempScale+'cnt=1&format=jsonp&callback=JSON_CALLBACK')
-            .success(function(data){
-                $scope.earthWeather = data;
-                console.log(data);
-                // do the celcius or fahrenheit conversion
-                if (window.localStorage['tempScale'] === 'Farenheit') {
-                    temp.max = data.list[0].temp.max * 1.8 - 459.67;
-                    temp.min = data.list[0].temp.min * 1.8 - 459.67;
-                } else {
-                    temp.max = (data.list[0].temp.max - 273.15);
-                    temp.min = (data.list[0].temp.min - 273.15);
-                }
-                $scope.earthWeather.list[0].temp.max = temp.max.toFixed(1);
-                $scope.earthWeather.list[0].temp.min = temp.min.toFixed(1);
-            })
-            .error(function(jqXHR, textStatus){
-                console.log(textStatus + ' Error on the earth weather');
-            });
+        } else {
+            // you're set in KC, the greatest city on Earph.
+            var lat = 39.0997;
+            var lng = -94.5783;
         }
+        Factories.EarthWeatherData($scope, lat, lng);
     }
     $scope.getWeatherData = function() {
         $scope.getMarsWeatherData();
