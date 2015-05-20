@@ -30,10 +30,10 @@ angular.module('sol', ['ionic', 'ngMessages'])
             templateUrl: 'templates/settings.html',
             controller: 'SettingsController'
         })
-    $urlRouterProvider.otherwise('/settings');
+    $urlRouterProvider.otherwise('/');
 })
 
-.controller('PlanetsController', ['$location', '$scope', '$http', 'service', function ($location, $scope, $http) {
+.controller('PlanetsController', ['$location', '$scope', '$http', function ($location, $scope, $http) {
     
     $scope.active = '';
     
@@ -58,7 +58,12 @@ angular.module('sol', ['ionic', 'ngMessages'])
         $http.jsonp('http://marsweather.ingenology.com/v1/latest?format=jsonp&callback=JSON_CALLBACK')
         .success(function(data){
             $scope.marsWeather = data.report;
-            console.log($scope.marsWeather);
+            if (window.localStorage['tempScale'] != 'Farenheit') {
+                $scope.marsWeather.max_temp_fahrenheit = ((data.report.max_temp_fahrenheit - 32) * 1.8).toFixed(1);
+                $scope.marsWeather.min_temp_fahrenheit = ((data.report.min_temp_fahrenheit - 32) * 1.8).toFixed(1);
+            }
+            
+            // console.log($scope.marsWeather);
         })
         .error(function(jqXHR, textStatus){
             console.log(textStatus + ' on the mars weather feed');
@@ -68,16 +73,30 @@ angular.module('sol', ['ionic', 'ngMessages'])
     };
     
     $scope.getEarthWeatherData = function() {
-        $http.jsonp('http://api.openweathermap.org/data/2.5/weather?lat='+$scope.lat+'&lon='+$scope.lon+'&format=jsonp&callback=JSON_CALLBACK')
-        .success(function(data){
-            $scope.earthWeather = data.main;
-        })
-        .error(function(jqXHR, textStatus){
-            console.log(textStatus + ' on the earth weather feed');
-            $scope.earthWeatherError = 'Error ' + textStatus + '. Your connection to the OpenWeatherMap service has gone haywire.';
-        });
-        
-    };
+        if (window.localStorage['lat'] && window.localStorage['lng']) {
+            var lat = window.localStorage['lat'];
+            var lng = window.localStorage['lng'];
+            var temp = {};
+            $http.jsonp('http://api.openweathermap.org/data/2.5/forecast/daily?lat='+lat+'&lon='+lng+'&units='+$scope.tempScale+'cnt=1&format=jsonp&callback=JSON_CALLBACK')
+            .success(function(data){
+                $scope.earthWeather = data;
+                console.log(data);
+                // do the celcius or fahrenheit conversion
+                if (window.localStorage['tempScale'] === 'Farenheit') {
+                    temp.max = data.list[0].temp.max * 1.8 - 459.67;
+                    temp.min = data.list[0].temp.min * 1.8 - 459.67;
+                } else {
+                    temp.max = (data.list[0].temp.max - 273.15);
+                    temp.min = (data.list[0].temp.min - 273.15);
+                }
+                $scope.earthWeather.list[0].temp.max = temp.max.toFixed(1);
+                $scope.earthWeather.list[0].temp.min = temp.min.toFixed(1);
+            })
+            .error(function(jqXHR, textStatus){
+                console.log(textStatus + ' Error on the earth weather');
+            });
+        }
+    }
     $scope.getWeatherData = function() {
         $scope.getMarsWeatherData();
         $scope.getEarthWeatherData();
@@ -126,6 +145,7 @@ angular.module('sol', ['ionic', 'ngMessages'])
     if (window.localStorage['locator']) {
         alert(window.localStorage['locator'])
     }
+    
 }])
 
 .controller('SettingsController', ['$scope', '$http', function ($scope, $http) {
@@ -169,7 +189,7 @@ angular.module('sol', ['ionic', 'ngMessages'])
         if (zipCodeForm.zipCode.$valid = true) {
             zipCode = this.zipCode;
             window.localStorage['zipCode'] = zipCode;
-            // use service to get the lat and lon
+            // use service to get the lat and lon 66202 64105
             
             var url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' + zipCode;
             var lat = null;
@@ -184,7 +204,6 @@ angular.module('sol', ['ionic', 'ngMessages'])
             .success(function(data){
                 lat = data.results[0].geometry.location.lat;
                 lng = data.results[0].geometry.location.lng;
-                console.log(lat + ' ' + lng);
                 setLocation(lat, lng);
             })
             .error(function(jqXHR, textStatus){
@@ -198,6 +217,7 @@ angular.module('sol', ['ionic', 'ngMessages'])
 setLocation = function(lat, lng){
     window.localStorage['lat'] = lat;
     window.localStorage['lng'] = lng;
+    console.log('all set ' + window.localStorage['lat'] + ' ' + window.localStorage['lng'])
 }
 
 /*

@@ -7763,16 +7763,19 @@ a.button {
       color: #289bbc; }
     .earthActive .weather#earth {
       bottom: 0; }
-  .weather button {
+  .weather a.button {
     background: #31b8a3;
     color: white;
-    text-transform: uppercase;
     border: none;
-    padding: 0;
-    height: 40px;
-    min-width: 62px;
-    margin-top: -10px;
-    min-height: inherit; }
+    padding: 2px 0 0;
+    height: 24px;
+    min-width: 40px;
+    margin-top: -2px;
+    margin-right: -6px;
+    margin-left: 4px;
+    min-height: inherit;
+    font-size: inherit;
+    line-height: inherit; }
 
 .data {
   color: #c4c3c3;
@@ -7834,3 +7837,6 @@ a.button {
     color: #c4c3c3; }
   #settings a.button.button-dark {
     background-color: #31b8a3; }
+
+.noUppercase {
+  text-transform: none; }

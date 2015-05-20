@@ -129,16 +129,19 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
             bottom: 0;
         }
     }
-    button {
+    a.button {
         background: #31b8a3;
         color: white;
-        text-transform: uppercase;
         border: none;
-        padding: 0;
-        height: 40px;
-        min-width: 62px;
-        margin-top: -10px;
+        padding: 2px 0 0;
+        height: 24px;
+        min-width: 40px;
+        margin-top: -2px;
+        margin-right: -6px;
+        margin-left: 4px;
         min-height: inherit;
+        font-size: inherit;
+        line-height: inherit;
     }
 }
 .data {
@@ -216,4 +219,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
     a.button.button-dark {
         background-color: #31b8a3;
     }
+}
+.noUppercase {
+    text-transform: none;
 }
