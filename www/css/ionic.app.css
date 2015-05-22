@@ -7685,15 +7685,26 @@ a.button {
   background-size: cover;
   background-repeat: no-repeat;
   position: absolute; }
+  .earthPlanet span, .marsPlanet span, .moonPlanet span {
+    position: absolute;
+    text-shadow: 1px 0px 1px #ccc, 0px 1px 1px #110d1f, 2px 1px 1px #ccc, 1px 2px 1px #110d1f;
+    width: 100%;
+    text-align: center;
+    font-size: 5em;
+    color: white; }
 
 .earthPlanet {
   background-image: url(../img/earth@2x.png); }
+  .earthPlanet span {
+    bottom: 1em; }
 
 .moonPlanet {
   background-image: url(../img/moon@2x.png); }
 
 .marsPlanet {
   background-image: url(../img/mars@2x.png); }
+  .marsPlanet span {
+    top: 1em; }
 
 @media (max-width: 767px) {
   .earthPlanet, .marsPlanet {
@@ -7731,15 +7742,18 @@ a.button {
 .weather {
   background: #000f16;
   position: absolute;
-  z-index: 2; }
+  z-index: 2;
+  width: 96%;
+  padding: 4px 4px 6px;
+  margin: 4px 2%; }
   .weather h1, .weather h2 {
     text-align: center;
-    font-size: 24px; }
+    font-size: 30px; }
   .weather h1 {
     border: 1px solid #b8bbbd;
     border-right: none;
     border-left: none;
-    margin-top: 19px;
+    margin-top: 6px;
     padding: 24px 16px 14px; }
     .weather h1 img {
       width: 80%;
@@ -7752,7 +7766,9 @@ a.button {
     transition: top .4s ease-in-out;
     -webkit-transition: top .4s ease-in-out; }
     .weather#mars h2 {
-      color: #e08b77; }
+      color: #D04F34; }
+    .weather#mars a.button {
+      background: #D04F34; }
     .marsActive .weather#mars {
       top: 0; }
   .weather#earth {
@@ -7767,7 +7783,7 @@ a.button {
     background: #31b8a3;
     color: white;
     border: none;
-    padding: 2px 0 0;
+    padding: 2px 6px 0;
     height: 24px;
     min-width: 40px;
     margin-top: -2px;
@@ -7840,3 +7856,6 @@ a.button {
 
 .noUppercase {
   text-transform: none; }
+
+sup {
+  top: -0.3em; }

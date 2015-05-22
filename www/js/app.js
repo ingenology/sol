@@ -3,9 +3,9 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages'])
+angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $cordovaStatusbar) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -13,7 +13,9 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages'])
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }
     if(window.StatusBar) {
-      StatusBar.styleDefault();
+      StatusBar.hide();
+    } else {
+        $cordovaStatusbar.hide();
     }
   });
 })
@@ -33,116 +35,75 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages'])
     $urlRouterProvider.otherwise('/');
 })
 
-.controller('PlanetsController', ['$location', '$scope', '$http', 'Factories', function ($location, $scope, $http, Factories) {
-    
-    $scope.active = '';
-    
-    $scope.toggleMars = function() {
-        if ($scope.active === '' || $scope.active === 'earthActive') {
-            $scope.active = 'marsActive';
-        } else {
-            $scope.active = '';
-        }
-    }
-    
-    $scope.toggleEarth = function() {
-        if ($scope.active === ''|| $scope.active === 'marsActive') {
-            $scope.active = 'earthActive';
-        } else {
-            $scope.active = '';
-        }
-    }
-    
-    
-    $scope.getMarsWeatherData = function() {
-        $http.jsonp('http://marsweather.ingenology.com/v1/latest?format=jsonp&callback=JSON_CALLBACK')
-        .success(function(data){
-            $scope.marsWeather = data.report;
-            if (window.localStorage['tempScale'] != 'Farenheit') {
-                $scope.marsWeather.max_temp_fahrenheit = ((data.report.max_temp_fahrenheit - 32) * 1.8).toFixed(1);
-                $scope.marsWeather.min_temp_fahrenheit = ((data.report.min_temp_fahrenheit - 32) * 1.8).toFixed(1);
+.controller('PlanetsController', ['$location', '$scope', '$http', 'Factories', '$cordovaSocialSharing', function ($location, $scope, $http, Factories, $cordovaSocialSharing) {
+    ionic.Platform.ready(function() { // ready for geolocation to work
+        
+        // just toggling classes on the planetz
+        $scope.active = '';
+        
+        $scope.toggleMars = function() {
+            if ($scope.active === '' || $scope.active === 'earthActive') {
+                $scope.active = 'marsActive';
+            } else {
+                $scope.active = '';
             }
-            
-            // console.log($scope.marsWeather);
-        })
-        .error(function(jqXHR, textStatus){
-            console.log(textStatus + ' on the mars weather feed');
-            $scope.marsWeatherError = 'Error ' + textStatus + '. Your connection to Curiosity has gone haywire.';
-        });
-        
-    };
-    
-    $scope.getEarthWeatherData = function() {
-        
-        // if geo, then get lat and long and do the weather
-        // if window, then do the weather
-        // else go to settings screen
-/*
-        if (1 == 2) {
-            var lat = 39.0997;
-            var lng = 94.5783;
-        } else
-*/
-
-        if (window.localStorage['lat'] && window.localStorage['lng']) {
-            var lat = window.localStorage['lat'];
-            var lng = window.localStorage['lng'];
-        } else {
-            // you're set in KC, the greatest city on Earph.
-            var lat = 39.0997;
-            var lng = -94.5783;
         }
-        Factories.EarthWeatherData($scope, lat, lng);
-    }
-    $scope.getWeatherData = function() {
-        $scope.getMarsWeatherData();
-        $scope.getEarthWeatherData();
-    }
-    
-}])
-
-// Fetches the lat and lng from a zip code and adds to windowstorage
-.service('latlngService', function($scope, $http){
-    var zip = $scope.zipCode;
-    var url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' + zip;
-    var lat = null;
-    var lng = null;
-    $http.jsonp(finalUrl)
-    .success(function(data){
-        console.log(data);
-    })
-    .error(function(jqXHR, textStatus){
-        console.log(textStatus + ' on the google maps');
+        
+        $scope.toggleEarth = function() {
+            if ($scope.active === ''|| $scope.active === 'marsActive') {
+                $scope.active = 'earthActive';
+            } else {
+                $scope.active = '';
+            }
+        }
+        
+        // mars weather!
+        $scope.getMarsWeatherData = function() {
+            $http.jsonp('http://marsweather.ingenology.com/v1/latest?format=jsonp&callback=JSON_CALLBACK')
+            .success(function(data){
+                $scope.marsWeather = data.report;
+                if (window.localStorage['tempScale'] != 'Farenheit') {
+                    $scope.marsWeather.max_temp_fahrenheit = ((data.report.max_temp_fahrenheit - 32) * 1.8).toFixed(1);
+                    $scope.marsWeather.min_temp_fahrenheit = ((data.report.min_temp_fahrenheit - 32) * 1.8).toFixed(1);
+                }
+            })
+            .error(function(jqXHR, textStatus){
+                console.log(textStatus + ' on the mars weather feed');
+                $scope.marsWeatherError = 'Error ' + textStatus + '. Your connection to Curiosity has gone haywire.';
+            });
+        };
+        
+        // earth weather!
+        $scope.getEarthWeatherData = function() {            
+            // if geo, then get lat and long and do the weather
+            // if window, then do the weather
+            // else, you're set in KC, the greatest city on Earph.
+            // then, go run the earth weather
+            var lat, lng;
+                
+            if (window.localStorage['locator'] === 'device') {
+                console.log('device locator service started.');
+                Factories.LocationService();
+            } else if (window.localStorage['lat'] && window.localStorage['lng']) {
+                console.log('device using zip');
+                lat = window.localStorage['lat'];
+                lng = window.localStorage['lng'];
+            } else {
+                lat = 39.0997;
+                lng = -94.5783;
+            }
+            Factories.EarthWeatherData($scope, lat, lng);
+        }
+        
+        $scope.getWeatherData = function() {
+            $scope.getMarsWeatherData();
+            $scope.getEarthWeatherData();
+        }
+        
+        $scope.share = function() {
+            $cordovaSocialSharing.share('According to Sol, the first interplanetary weather app, it is '+$scope.earthWeather.list[0].temp.day+' outside in '+ $scope.earthWeather.city.name +'. But on Mars, it is only '+ $scope.max_temp_fahrenheit, null, 'www/imagefile.png', 'http://marsweather.com');
+        }
     });
-
-})
-
-.controller('EarthWeatherController', ['$location', '$scope', '$http', function ($location, $scope, $http) {
-/*
-    $scope.getWeatherData = function() {
-
-        set location lat and long by:
-            try getting user location '$cordovaGeolocation',
-                if success, set lat and lon variables and go on to get weather
-                if fail ask "ok loser, give me your zip code" for user zip
-            get user zip
-                user input of zip and store to window.localstorage
-                try get lang and long from zip 
-                http://maps.googleapis.com/maps/api/geocode/json?latlng=[preferences:lat],[preferences:lng]&amp;sensor=true
-                    set lang and long variables
-                fail "sorry"
-
-        get weather data 
-            try http://api.openweathermap.org/data/2.1/find/city?lat=[preferences:lat]&amp;lon=[preferences:lng]&amp;radius=10
-            fail "sorry"
-
-    };
-*/
-
-    if (window.localStorage['locator']) {
-        alert(window.localStorage['locator'])
-    }
-    
 }])
 
 .controller('SettingsController', ['$scope', '$http', function ($scope, $http) {
@@ -177,35 +138,18 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages'])
         return type === $scope.Locator;
     };
     
+    
     // set Zip Code
-  
+    // set scope zip to locale storage if it's there.
     if (window.localStorage['zipCode']) {
         $scope.zipCode = parseInt(window.localStorage['zipCode']);
     }
+    // set scope zip and locale storage zip with form entry
     $scope.setZipCode = function($scope) {
         if (zipCodeForm.zipCode.$valid = true) {
             zipCode = this.zipCode;
             window.localStorage['zipCode'] = zipCode;
-            // use service to get the lat and lon 66202 64105
-            
-            var url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' + zipCode;
-            var lat = null;
-            var lng = null;
-            $http({
-                url: url,
-                method: 'GET',
-                params: {
-                    callback : 'JSON_CALLBACK'
-                }
-            })
-            .success(function(data){
-                lat = data.results[0].geometry.location.lat;
-                lng = data.results[0].geometry.location.lng;
-                setLocation(lat, lng);
-            })
-            .error(function(jqXHR, textStatus){
-                console.log(textStatus + ' on the google maps');
-            });
+            Factories.LocationFromZipService(zipCode);
         }
     }
     
@@ -214,7 +158,6 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages'])
 setLocation = function(lat, lng){
     window.localStorage['lat'] = lat;
     window.localStorage['lng'] = lng;
-    console.log('all set ' + window.localStorage['lat'] + ' ' + window.localStorage['lng'])
 }
 
 /*
