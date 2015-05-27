@@ -7684,18 +7684,28 @@ a.button {
 .earthPlanet, .marsPlanet, .moonPlanet {
   background-size: cover;
   background-repeat: no-repeat;
-  position: absolute; }
-  .earthPlanet span, .marsPlanet span, .moonPlanet span {
+  position: absolute;
+  /*
+    > div div {
+        position: absolute;
+        text-align: center;
+        width: 100%;
+        white-space: nowrap;
+    }
+*/ }
+  .earthPlanet > div, .marsPlanet > div, .moonPlanet > div {
     position: absolute;
-    text-shadow: 1px 0px 1px #ccc, 0px 1px 1px #110d1f, 2px 1px 1px #ccc, 1px 2px 1px #110d1f;
+    text-shadow: 1px 0px 1px #ccc, 0px 1px 1px #110d1f;
     width: 100%;
     text-align: center;
+    color: white; }
+  .earthPlanet h1, .marsPlanet h1, .moonPlanet h1 {
     font-size: 5em;
     color: white; }
 
 .earthPlanet {
   background-image: url(../img/earth@2x.png); }
-  .earthPlanet span {
+  .earthPlanet > div {
     bottom: 1em; }
 
 .moonPlanet {
@@ -7703,8 +7713,26 @@ a.button {
 
 .marsPlanet {
   background-image: url(../img/mars@2x.png); }
-  .marsPlanet span {
+  .marsPlanet > div {
     top: 1em; }
+
+#tutorial {
+  text-align: center;
+  padding: 4em 12px;
+  background: transparent; }
+  #tutorial h2, #tutorial p {
+    color: white;
+    width: 100%;
+    white-space: nowrap; }
+  #tutorial p {
+    font-size: 1em; }
+  #tutorial .finishTutorial {
+    position: absolute;
+    top: 107vw;
+    left: 57vw; }
+
+ion-modal-view.modal {
+  background: rgba(0, 0, 0, 0.8); }
 
 @media (max-width: 767px) {
   .earthPlanet, .marsPlanet {
@@ -7793,6 +7821,16 @@ a.button {
     font-size: inherit;
     line-height: inherit; }
 
+.activated {
+  -webkit-animation: orbit 18s linear infinite; }
+
+@-webkit-keyframes orbit {
+  from {
+    -webkit-transform: rotate(0deg) translateX(0px) rotate(0deg); }
+
+  to {
+    -webkit-transform: rotate(0deg) translateX(0px) rotate(-360deg); } }
+
 .data {
   color: #c4c3c3;
   text-transform: uppercase; }
@@ -7824,7 +7862,7 @@ a.button {
     padding: 1.5em; }
   #settings h1, #settings h2 {
     text-transform: uppercase;
-    font-family: HelveticaNeue, Roboto-Light, sans-serif;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Roboto-Light, sans-serif;
     color: #c4c3c3; }
   #settings h1 {
     font-size: 2em;

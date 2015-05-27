@@ -1,10 +1,10 @@
 <ion-pane class="{{active}}" ng-init="getWeatherData()" cache-view="false">
     <a ng-click="toggleEarth()"  class="earthPlanet">
-        <span>{{ earthWeather.list[0].temp.day }}<sup>&deg;</sup></span>
+        <div><h1>{{ earthWeather.list[0].temp.day }}<sup>&deg;</sup></h1></div>
     </a>
-    <a ui-sref="settings" class="moonPlanet"></a>
+    <a ui-sref="settings" class="moonPlanet activated"></a>
     <a ng-click="toggleMars()" class="marsPlanet">
-        <span>{{ marsWeather.max_temp_fahrenheit }}<sup>&deg;</sup></span>
+        <div><h1>{{ marsWeather.max_temp_fahrenheit }}<sup>&deg;</sup></h1></div>
     </a>
     <div id="mars" class="weather">
         <h1><img src="img/mars_heading@2x.png"></h1>

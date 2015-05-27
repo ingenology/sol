@@ -35,7 +35,7 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
     $urlRouterProvider.otherwise('/');
 })
 
-.controller('PlanetsController', ['$location', '$scope', '$http', 'Factories', '$cordovaSocialSharing', function ($location, $scope, $http, Factories, $cordovaSocialSharing) {
+.controller('PlanetsController', ['$location', '$scope', '$http', 'Factories', '$cordovaSocialSharing', '$ionicModal', 'ModalService', function ($location, $scope, $http, Factories, $cordovaSocialSharing, $ionicModal, ModalService) {
     ionic.Platform.ready(function() { // ready for geolocation to work
         
         // just toggling classes on the planetz
@@ -66,6 +66,7 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
                     $scope.marsWeather.max_temp_fahrenheit = ((data.report.max_temp_fahrenheit - 32) * 1.8).toFixed(1);
                     $scope.marsWeather.min_temp_fahrenheit = ((data.report.min_temp_fahrenheit - 32) * 1.8).toFixed(1);
                 }
+                console.log('getMarsWeatherData controller sez ' + $scope.marsWeather.max_temp_fahrenheit)
             })
             .error(function(jqXHR, textStatus){
                 console.log(textStatus + ' on the mars weather feed');
@@ -82,10 +83,10 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
             var lat, lng;
                 
             if (window.localStorage['locator'] === 'device') {
-                console.log('device locator service started.');
+                console.log('getEarthWeatherData controller using device locator.');
                 Factories.LocationService();
             } else if (window.localStorage['lat'] && window.localStorage['lng']) {
-                console.log('device using zip');
+                console.log('getEarthWeatherData controller using zip');
                 lat = window.localStorage['lat'];
                 lng = window.localStorage['lng'];
             } else {
@@ -93,9 +94,20 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
                 lng = -94.5783;
             }
             Factories.EarthWeatherData($scope, lat, lng);
+            console.log('getEarthWeatherData controller sez lat and long are ' + lat + ' and ' + lng)
         }
         
+        $scope.finishTutorial = function() {
+            $scope.closeModal();
+    		window.localStorage['viewedTutorial'] = 'yes';
+    	};
+        
         $scope.getWeatherData = function() {
+            if (!window.localStorage['viewedTutorial']) {
+    			ModalService.init('templates/tutorial.html', $scope).then(function(modal) {
+    				modal.show();
+    			});
+    		}
             $scope.getMarsWeatherData();
             $scope.getEarthWeatherData();
         }
@@ -111,7 +123,7 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
     
     // TempScale settings
     if (window.localStorage['tempScale']) {
-        $scope.TempScale = window.localStorage['tempScale'];   
+        $scope.TempScale = window.localStorage['tempScale'];
     } else {
         $scope.TempScale = 'Farenheit';
     }
@@ -121,10 +133,9 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
     $scope.isTempScale = function(type) {
         window.localStorage['tempScale'] = $scope.TempScale;
         return type === $scope.TempScale;
-    };
+    };    
     
     // Locator settings
-
     if (window.localStorage['locator']) {
         $scope.Locator = window.localStorage['locator'];   
     } else {
@@ -136,14 +147,13 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
     $scope.isLocator = function(type) {
         window.localStorage['locator'] = $scope.Locator;
         return type === $scope.Locator;
-    };
+    };    
     
-    
-    // set Zip Code
-    // set scope zip to locale storage if it's there.
+    // set Zip Code to locale storage if it's there.
     if (window.localStorage['zipCode']) {
         $scope.zipCode = parseInt(window.localStorage['zipCode']);
     }
+    
     // set scope zip and locale storage zip with form entry
     $scope.setZipCode = function($scope) {
         if (zipCodeForm.zipCode.$valid = true) {
@@ -153,13 +163,9 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
         }
     }
     
-}]);
+}])
 
 setLocation = function(lat, lng){
     window.localStorage['lat'] = lat;
     window.localStorage['lng'] = lng;
 }
-
-/*
-.controller('Tutorial');
-*/

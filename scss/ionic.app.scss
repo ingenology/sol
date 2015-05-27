@@ -31,19 +31,30 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
     background-size: cover;
     background-repeat: no-repeat;
     position: absolute;
-    span {
+    > div {
         position: absolute;
         text-shadow:
-            1px 0px 1px #ccc, 0px 1px 1px #110d1f, 2px 1px 1px #ccc, 1px 2px 1px #110d1f;
+            1px 0px 1px #ccc, 0px 1px 1px #110d1f;
         width: 100%;
         text-align: center;
+        color: white;
+    }
+    h1 {
         font-size: 5em;
         color: white;
     }
+/*
+    > div div {
+        position: absolute;
+        text-align: center;
+        width: 100%;
+        white-space: nowrap;
+    }
+*/
 }
 .earthPlanet {
     background-image: url(../img/earth@2x.png);
-    span {
+    > div {
         bottom: 1em;
     }
 }
@@ -52,9 +63,31 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 .marsPlanet {
     background-image: url(../img/mars@2x.png);
-    span {
+    > div {
         top: 1em;
     }
+}
+
+#tutorial {
+    text-align: center;
+    padding: 4em 12px;
+    background: transparent;
+    h2, p{
+        color: white;
+        width: 100%;
+        white-space: nowrap;
+    }
+    p {
+        font-size: 1em;
+    }
+    .finishTutorial {
+        position: absolute;
+        top: 107vw;
+        left: 57vw;
+    }
+}
+ion-modal-view.modal {
+    background: rgba(0, 0, 0, 0.8);
 }
 @media (max-width: 767px) {
     .earthPlanet, .marsPlanet {
@@ -165,6 +198,14 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
         line-height: inherit;
     }
 }
+.activated {
+    -webkit-animation: orbit 18s linear infinite;
+    
+}
+@-webkit-keyframes orbit {
+	from { 	-webkit-transform: rotate(0deg) translateX(0px) rotate(0deg); }
+	to   {  -webkit-transform: rotate(0deg) translateX(0px) rotate(-360deg); }
+}
 .data {
     color: #c4c3c3;
     text-transform: uppercase;
@@ -204,7 +245,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
     }
     h1, h2 {
         text-transform: uppercase;
-        font-family: HelveticaNeue, Roboto-Light, sans-serif;
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Roboto-Light, sans-serif;
         color: #c4c3c3;
     }
     h1 {
