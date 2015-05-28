@@ -7681,55 +7681,37 @@ a.button {
   background-repeat: no-repeat;
   height: 100%; }
 
+#planets h1.temp {
+  font-size: 4.6em;
+  color: white;
+  position: absolute;
+  z-index: 2;
+  text-shadow: 1px 0px 1px #ccc, 0px 1px 1px #110d1f;
+  width: 100%;
+  text-align: center;
+  color: white;
+  margin: 0; }
+  #planets h1.temp.top {
+    top: 12px; }
+  #planets h1.temp.bottom {
+    bottom: 12px; }
+
 .earthPlanet, .marsPlanet, .moonPlanet {
   background-size: cover;
   background-repeat: no-repeat;
   position: absolute;
-  /*
-    > div div {
-        position: absolute;
-        text-align: center;
-        width: 100%;
-        white-space: nowrap;
-    }
-*/ }
-  .earthPlanet > div, .marsPlanet > div, .moonPlanet > div {
-    position: absolute;
-    text-shadow: 1px 0px 1px #ccc, 0px 1px 1px #110d1f;
-    width: 100%;
-    text-align: center;
-    color: white; }
-  .earthPlanet h1, .marsPlanet h1, .moonPlanet h1 {
-    font-size: 5em;
-    color: white; }
+  z-index: 1; }
 
 .earthPlanet {
-  background-image: url(../img/earth@2x.png); }
-  .earthPlanet > div {
-    bottom: 1em; }
+  background-image: url(../img/earth@2x.png);
+  -webkit-animation: orbit 900s linear infinite; }
 
 .moonPlanet {
   background-image: url(../img/moon@2x.png); }
 
 .marsPlanet {
-  background-image: url(../img/mars@2x.png); }
-  .marsPlanet > div {
-    top: 1em; }
-
-#tutorial {
-  text-align: center;
-  padding: 4em 12px;
-  background: transparent; }
-  #tutorial h2, #tutorial p {
-    color: white;
-    width: 100%;
-    white-space: nowrap; }
-  #tutorial p {
-    font-size: 1em; }
-  #tutorial .finishTutorial {
-    position: absolute;
-    top: 107vw;
-    left: 57vw; }
+  background-image: url(../img/mars@2x.png);
+  -webkit-animation: orbit 1200s linear infinite; }
 
 ion-modal-view.modal {
   background: rgba(0, 0, 0, 0.8); }
@@ -7821,9 +7803,6 @@ ion-modal-view.modal {
     font-size: inherit;
     line-height: inherit; }
 
-.activated {
-  -webkit-animation: orbit 18s linear infinite; }
-
 @-webkit-keyframes orbit {
   from {
     -webkit-transform: rotate(0deg) translateX(0px) rotate(0deg); }
@@ -7897,3 +7876,62 @@ ion-modal-view.modal {
 
 sup {
   top: -0.3em; }
+
+@-webkit-keyframes pulsate {
+  0% {
+    opacity: .50; }
+
+  70% {
+    opacity: .50; }
+
+  80% {
+    opacity: .9; }
+
+  100% {
+    opacity: .50; } }
+
+#tutorial {
+  background-color: transparent;
+  height: 100vh; }
+  #tutorial .oval {
+    width: 240px;
+    height: 100px;
+    position: absolute;
+    top: 1em;
+    left: 50%;
+    margin-left: -120px;
+    background: transparent;
+    -webkit-border-radius: 120px/50px;
+    border-color: white;
+    border-width: 4px;
+    border-style: solid;
+    -webkit-animation: pulsate 1s linear infinite; }
+    #tutorial .oval.bottom {
+      top: inherit;
+      bottom: 1em; }
+    #tutorial .oval.moon {
+      top: 48vw;
+      width: 160px;
+      left: 69%;
+      margin-left: -80px;
+      -webkit-border-radius: 80px/50px; }
+  #tutorial * {
+    color: white;
+    text-align: center; }
+  #tutorial .slider-pager {
+    bottom: 50%; }
+  #tutorial .directions {
+    margin-top: 26em;
+    position: relative; }
+  #tutorial .one, #tutorial .slider-slide, #tutorial .slider {
+    height: 100%; }
+  #tutorial .next {
+    font-size: 1.5em; }
+    #tutorial .next i {
+      font-size: .8em; }
+  #tutorial .button {
+    border: none;
+    background: #31b8a3; }
+
+.slide-in-up.ng-enter-active, .slide-in-up > .ng-enter-active {
+  background: rgba(0, 0, 0, 0.5); }

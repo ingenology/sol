@@ -1,23 +1,32 @@
 <ion-modal-view>
     <div id="tutorial" class="modal">
-        <div class="earthPlanet">
-            <div>
-                <h2>Earth Weather</h2>
-                <p>Slide down or touch Earth.</p>
-            </div>
-        </div>
-        <div class="moonPlanet">
-            <div>
-                <h2>Settings</h2>
-                <p>Touch Moon</p>
-            </div>
-        </div>
-        <a class="finishTutorial button" ng-click="finishTutorial()">Let's do it</a>
-        <div class="marsPlanet">
-            <div>
-                <h2>Mars Weather</h2>
-                <p>Slide up or touch Mars.</p>
-            </div>
-        </div>
+        <ion-slide-box>
+            <ion-slide>
+              <div class="one">
+                  <div class="oval"></div>
+                  <div class="directions">
+                      <h1>Quick Tutorial</h1>
+                      <h2>Touch Mars or Earth for full weather data.</h2>
+                  </div>
+                  <div class="oval bottom"></div>
+              </div>
+            </ion-slide>
+            <ion-slide>
+              <div class="two">
+                  <div class="oval moon"></div>
+                  <div class="directions">
+                      <h1>Quick Tutorial</h1>
+                      <h2>Touch Moon to change settings.</h2>
+                  </div>
+              </div>
+            </ion-slide>
+            <ion-slide>
+              <div class="two">
+                  <div class="directions">
+                      <a ng-click="finishTutorial()" class="button"><span class="next">Use Sol <i class="ion-chevron-right"></i> <i class="ion-chevron-right"></i> <i class="ion-chevron-right"></i></span></a>
+                  </div>
+              </div>
+            </ion-slide>
+        </ion-slide-box>
     </div>
 </ion-modal-view>
