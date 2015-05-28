@@ -47,6 +47,9 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
         }
     }
 }
+.ion-load-c, .ion-ios-loop {
+    -webkit-animation: orbit 1s linear infinite;
+}
 .earthPlanet, .marsPlanet, .moonPlanet {
     background-size: cover;
     background-repeat: no-repeat;
@@ -179,7 +182,7 @@ ion-modal-view.modal {
 }
 @-webkit-keyframes orbit {
 	from { 	-webkit-transform: rotate(0deg) translateX(0px) rotate(0deg); }
-	to   {  -webkit-transform: rotate(0deg) translateX(0px) rotate(-360deg); }
+	to   {  -webkit-transform: rotate(0deg) translateX(0px) rotate(360deg); }
 }
 .data {
     color: #c4c3c3;
@@ -266,10 +269,10 @@ sup {
 }
 
 @-webkit-keyframes pulsate {
-    0% { opacity: .50}
-    70% { opacity: .50}
+    0% { opacity: .70}
+    72% { opacity: .40}
     80% { opacity: .9}
-    100% { opacity: .50}
+    100% { opacity: .70}
 }
 
 #tutorial { 
@@ -287,7 +290,7 @@ sup {
     	border-color: white;
     	border-width: 4px;
     	border-style: solid;
-    	-webkit-animation: pulsate 1s linear infinite;
+    	-webkit-animation: pulsate 2s linear infinite;
     	&.bottom {
         	top: inherit;
         	bottom: 1em;

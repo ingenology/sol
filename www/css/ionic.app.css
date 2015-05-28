@@ -7696,6 +7696,9 @@ a.button {
   #planets h1.temp.bottom {
     bottom: 12px; }
 
+.ion-load-c, .ion-ios-loop {
+  -webkit-animation: orbit 1s linear infinite; }
+
 .earthPlanet, .marsPlanet, .moonPlanet {
   background-size: cover;
   background-repeat: no-repeat;
@@ -7808,7 +7811,7 @@ ion-modal-view.modal {
     -webkit-transform: rotate(0deg) translateX(0px) rotate(0deg); }
 
   to {
-    -webkit-transform: rotate(0deg) translateX(0px) rotate(-360deg); } }
+    -webkit-transform: rotate(0deg) translateX(0px) rotate(360deg); } }
 
 .data {
   color: #c4c3c3;
@@ -7879,16 +7882,16 @@ sup {
 
 @-webkit-keyframes pulsate {
   0% {
-    opacity: .50; }
+    opacity: .70; }
 
-  70% {
-    opacity: .50; }
+  72% {
+    opacity: .40; }
 
   80% {
     opacity: .9; }
 
   100% {
-    opacity: .50; } }
+    opacity: .70; } }
 
 #tutorial {
   background-color: transparent;
@@ -7905,7 +7908,7 @@ sup {
     border-color: white;
     border-width: 4px;
     border-style: solid;
-    -webkit-animation: pulsate 1s linear infinite; }
+    -webkit-animation: pulsate 2s linear infinite; }
     #tutorial .oval.bottom {
       top: inherit;
       bottom: 1em; }

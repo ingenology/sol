@@ -44,6 +44,7 @@ app.factory('Factories', function($http) {
                 console.log('Long: ' + crd.longitude);
                 lat = crd.latitude;
                 lng = crd.longitude;
+/*
                 codeLatLng(scope, lat, lng);
                 
                 function codeLatLng(scope, lat, lng){
@@ -78,6 +79,7 @@ app.factory('Factories', function($http) {
                         console.log(textStatus+' on the codeLatLng');
                     });
                 }
+*/
             };
 
             function error(err) {
@@ -86,7 +88,7 @@ app.factory('Factories', function($http) {
             navigator.geolocation.getCurrentPosition(success, error, options);
         },
         
-        EarthWeatherData: function(scope, lat, lng) {
+        EarthWeatherService: function(scope, lat, lng) {
             $http.jsonp('http://api.openweathermap.org/data/2.5/forecast/daily?lat='+lat+'&lon='+lng+'cnt=1&format=jsonp&callback=JSON_CALLBACK')
             .success(function(data) {
                 var temp = {};
@@ -107,8 +109,10 @@ app.factory('Factories', function($http) {
                 temp.list[0].temp.min = temp.list[0].temp.min.toFixed(1);
                 temp.list[0].temp.day = temp.list[0].temp.day.toFixed(1);
                 scope.earthWeather = temp;
-                console.log('EarthWeatherData Factory sez day temp = ' + temp.list[0].temp.day )
-                console.log('EarthWeatherData Factory sez lat and long it is using are '+lat+' and '+lng)
+                scope.earthTempLoading = false;
+                console.log('EarthWeatherService Factory sez day temp = ' + temp.list[0].temp.day );
+                console.log('EarthWeatherService Factory sez lat and long it is using are '+lat+' and '+lng);
+                console.log('EarthWeatherService Factory sez city is ' + scope.earthWeather.city.name );
             })
             .error(function(jqXHR, textStatus) {
                 console.log(textStatus+' Error on the Earth Weather Data factory');
