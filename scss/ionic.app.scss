@@ -21,6 +21,10 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 .pane {
     background-image: url(../img/background.png);
     background-size: cover;
@@ -49,6 +53,12 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 .ion-load-c, .ion-ios-loop {
     -webkit-animation: orbit 1s linear infinite;
+}
+.ion-ios-loop {
+    position: absolute;
+    left: 50%;
+    margin-left: -46px;
+    opacity: .4;
 }
 .earthPlanet, .marsPlanet, .moonPlanet {
     background-size: cover;

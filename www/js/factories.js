@@ -89,6 +89,7 @@ app.factory('Factories', function($http) {
         },
         
         EarthWeatherService: function(scope, lat, lng) {
+            scope.earthTempLoading = true;
             $http.jsonp('http://api.openweathermap.org/data/2.5/forecast/daily?lat='+lat+'&lon='+lng+'cnt=1&format=jsonp&callback=JSON_CALLBACK')
             .success(function(data) {
                 var temp = {};
@@ -108,8 +109,8 @@ app.factory('Factories', function($http) {
                 temp.list[0].temp.max = temp.list[0].temp.max.toFixed(1);
                 temp.list[0].temp.min = temp.list[0].temp.min.toFixed(1);
                 temp.list[0].temp.day = temp.list[0].temp.day.toFixed(1);
-                scope.earthWeather = temp;
                 scope.earthTempLoading = false;
+                scope.earthWeather = temp;
                 console.log('EarthWeatherService Factory sez day temp = ' + temp.list[0].temp.day );
                 console.log('EarthWeatherService Factory sez lat and long it is using are '+lat+' and '+lng);
                 console.log('EarthWeatherService Factory sez city is ' + scope.earthWeather.city.name );

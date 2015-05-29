@@ -38,6 +38,8 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
 .controller('PlanetsController', ['$location', '$scope', '$http', 'Factories', '$cordovaSocialSharing', '$ionicModal', 'ModalService', '$ionicPopup', function ($location, $scope, $http, Factories, $cordovaSocialSharing, $ionicModal, ModalService, $ionicPopup) {
     // just toggling classes on the planetz
     $scope.active = '';
+    $scope.earthTempLoading = false;
+    $scope.marsTempLoading = false;
     
     $scope.toggleMars = function() {
         if ($scope.active === '' || $scope.active === 'earthActive') {
@@ -76,6 +78,7 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
     };
     
     // earth weather!
+    $scope.earthWeather = {};
     $scope.getEarthWeatherData = function() {            
         // if geo, then get lat and long and do the weather
         // if window, then do the weather
@@ -141,7 +144,7 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
     }
 }])
 
-.controller('SettingsController', ['$scope', '$http', function ($scope, $http) {
+.controller('SettingsController', ['$scope', '$http', '$ionicModal', function ($scope, $http, $ionicModal) {
     //check local storage first, or set it to one and wait until user sets it.
     
     // TempScale settings
@@ -185,6 +188,20 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
             Factories.LocationFromZipService(zipCode);
         }
     }
+    
+    // acknowledgments modal
+    $ionicModal.fromTemplateUrl('acknowledgments.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });
+    $scope.openModal = function() {
+        $scope.modal.show();
+    };
+    $scope.closeModal = function() {
+        $scope.modal.hide();
+    };
     
 }])
 
