@@ -8,13 +8,14 @@
             <a class="button" ng-class="{'button-dark': isTempScale('Farenheit')}" ng-click="setTempScale('Farenheit')">Farenheit</a>
             <a class="button" ng-class="{'button-dark': isTempScale('Celsius')}" ng-click="setTempScale('Celsius')">Celsius</a>
         </div>
-        <br><br>
+        <br>
+        
         <h2>Current Location</h2>
         <p>Choose how you will show location.</p>
-            <div class="button-bar">
-                <a class="button" ng-class="{'button-dark': isLocator('device')}" ng-click="setLocator('device')">Device GPS</a>
-                <a class="button" ng-class="{'button-dark': isLocator('zip')}" ng-click="setLocator('zip')">Zip Code</a>
-            </div>
+        <div class="button-bar">
+            <a class="button" ng-class="{'button-dark': isLocator('device')}" ng-click="setLocator('device')">Device GPS</a>
+            <a class="button" ng-class="{'button-dark': isLocator('zip')}" ng-click="setLocator('zip')">Zip Code</a>
+        </div>
         <form id="zipCodeForm" ng-hide="Locator != 'zip'" class="ng-hide" name="zipCodeForm">
             <input type="number"
                    name="zipCode"
@@ -29,28 +30,12 @@
                 <div ng-message="number">Numbers only please.</div>
             </div>
         </form>
-        <h2>Acknowledgements</h2>
-        <a class="button">View</a>
-        <script id="acknowledgments.html" type="text/ng-template">
-          <ion-modal-view>
-            <ion-header-bar>
-              <h1 class="title">Acknowledgements</h1>
-            </ion-header-bar>
-            <ion-content>
-                <p>
-                    Snippet of info about the NASA Space apps challenge and/or link to site.??
-                    Jessica Meurer / Designer<br>
-                    Mike Wilson / Lead Strategist,<br>
-                    Doug Niccum / Mobile Developer,<br>
-                    Dustin Walruff / Mobile Developer,<br>
-                    Brian Cody / Mobile Developer,<br>
-                    Jon Smajda / Developer,<br>
-                    Matt Toolin / Videographer,<br>
-                    Nathan Victor / Mobile Developer
-                </p>
-            </ion-content>
-          </ion-modal-view>
-        </script>
+        <br>
+        
+        <h2>Acknowledgments</h2>
+        <div class="button-bar">
+            <a class="button" ng-click="openModal()">View</a>
+        </div>
     </div>
 </div>
 </ion-modal-view>

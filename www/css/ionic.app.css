@@ -7858,7 +7858,8 @@ ion-modal-view.modal {
   #settings h1 {
     font-size: 2em;
     background: #181b1b;
-    padding: .5em; }
+    padding: .5em;
+    margin-bottom: 0; }
     #settings h1 a {
       color: #c4c3c3;
       text-decoration: none;
@@ -7871,6 +7872,10 @@ ion-modal-view.modal {
     margin-top: 19px;
     font-size: 1.5em;
     padding: 16px 0 14px; }
+    #settings h2.last {
+      margin-bottom: 15px; }
+  #settings h2:last-of-type {
+    margin-bottom: 15px; }
   #settings form {
     clear: both;
     margin-top: 1.4em;
@@ -7882,6 +7887,8 @@ ion-modal-view.modal {
     color: #c4c3c3; }
   #settings a.button.button-dark {
     background-color: #31b8a3; }
+  #settings.acknowledgments {
+    background: black; }
 
 .noUppercase {
   text-transform: none; }
@@ -7946,4 +7953,4 @@ sup {
     background: #31b8a3; }
 
 .slide-in-up.ng-enter-active, .slide-in-up > .ng-enter-active {
-  background: rgba(0, 0, 0, 0.5); }
+  background: rgba(0, 0, 0, 0.867); }

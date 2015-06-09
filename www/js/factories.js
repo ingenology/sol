@@ -44,48 +44,51 @@ app.factory('Factories', function($http) {
                 console.log('Long: ' + crd.longitude);
                 lat = crd.latitude;
                 lng = crd.longitude;
-/*
-                codeLatLng(scope, lat, lng);
-                
-                function codeLatLng(scope, lat, lng){
-                    var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+lat+','+lng;
-                    $http({
-                        url: url,
-                        method: 'GET',
-                        params: {
-                            callback : 'JSON_CALLBACK'
-                        }
-                    })
-                    .success(function(data){
-                        // help from this stack answer http://stackoverflow.com/a/6798005
-                        if (data.results[1]) {
-                            console.log(data.results[0].formatted_address)
-                            for (var i=0; i<data.results[0].address_components.length; i++) {
-                                for (var b=0;b<data.results[0].address_components[i].types.length;b++) {
-                                    if (data.results[0].address_components[i].types[b] == "administrative_area_level_1") {
-                                        $scope.city = data.results[0].address_components[2].long_name;
-                                        console.log(data.results[0].address_components[2].long_name);
-                                        break;
-                                    }
-                                }
-                            }
-                        //city data
-                        // console.log(data.results[0].address_components[i].short_name + " " + data.results[0].address_components[i].long_name)
-                        } else {
-                        console.log("No results found");
-                        }
-                    })
-                    .error(function(jqXHR, textStatus){
-                        console.log(textStatus+' on the codeLatLng');
-                    });
-                }
-*/
             };
 
             function error(err) {
-                console.log('LocationService Factory error(' + err.code + '): ' + err.message);
+                var msg = err.message;
+                console.log('LocationService Factory error(' + err.code + '): ' + msg);
+/*
+                switch(err.code){
+                case 0:
+                    msg = 'There was an error while retrieving your location: ' + err.message);
+                break;
+                case 1:
+                    msg = 'The user prevented this page from retrieving a location.';
+                break;
+                case 2:
+                    msg = 'The browser was unable to determine your location: ' + err.message;
+                break;
+                case 3:
+                    msg = 'The browser timed out before retrieving the location.';
+                break;
+                }
+*/
             };
-            navigator.geolocation.getCurrentPosition(success, error, options);
+            
+            navigator.geolocation.watchPosition(success, error, options);
+            
+            // error modal
+/*
+            scope.showRetryLocationService = function(msg) {
+                var myPopup = $ionicPopup.show({
+                    template: msg,
+                    title: 'Location Error',
+                    scope: $scope,
+                    buttons: [
+                        { text: 'Cancel' },
+                        {
+                            text: '<b>Retry</b>',
+                            type: 'button-positive',
+                            onTap: function(e) {
+                            LocationService();
+                            }
+                        }
+                    ]
+                })
+            }
+*/
         },
         
         EarthWeatherService: function(scope, lat, lng) {
@@ -118,8 +121,7 @@ app.factory('Factories', function($http) {
             .error(function(jqXHR, textStatus) {
                 console.log(textStatus+' Error on the Earth Weather Data factory');
             });
-        }
-        
+        }        
     }
 })
 .service('ModalService', function($ionicModal, $rootScope) {

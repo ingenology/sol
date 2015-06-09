@@ -32,11 +32,11 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
             templateUrl: 'templates/settings.html',
             controller: 'SettingsController'
         })
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/settings');
 })
 
 .controller('PlanetsController', ['$location', '$scope', '$http', 'Factories', '$cordovaSocialSharing', '$ionicModal', 'ModalService', '$ionicPopup', function ($location, $scope, $http, Factories, $cordovaSocialSharing, $ionicModal, ModalService, $ionicPopup) {
-    // just toggling classes on the planetz
+    // toggle classes on the weather details for their respective planets
     $scope.active = '';
     $scope.earthTempLoading = false;
     $scope.marsTempLoading = false;
@@ -78,6 +78,8 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
     };
     
     // earth weather!
+    lat = 39.0997;
+    lng = -94.5783;
     $scope.earthWeather = {};
     $scope.getEarthWeatherData = function() {            
         // if geo, then get lat and long and do the weather
@@ -120,10 +122,10 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
         $cordovaSocialSharing.share('According to Sol, the first interplanetary weather app, it is '+$scope.earthWeather.list[0].temp.day+' outside in '+ $scope.earthWeather.city.name +'. But on Mars, it is only '+ $scope.max_temp_fahrenheit, null, 'www/imagefile.png', 'http://marsweather.com');
     }
     
-    //Error Helpers
+    // Error Helpers
     // this mars weather feed connection error calls this popup.
     $scope.showRetryMars = function() {
-        var myPopup = $ionicPopup.show({
+        var popup = $ionicPopup.show({
             template: 'Your connection to Curiosity has gone haywire.',
             title: 'Mars Weather Error',
             scope: $scope,
@@ -142,6 +144,28 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
             ]
         })
     }
+    
+    // the error for inability to get lat and lng from zip code
+/*
+    $scope.showRetryEarthWeatherService = function($scope, lat, lng) {
+        var popup = $ionicPopup.show({
+            template: 'Your connection to the weather man has been interrupted.',
+            title: 'Earth Weather Error',
+            scope: $scope,
+            buttons: [
+                { text: 'Cancel' },
+                {
+                    text: '<b>Retry</b>',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                    Factories.EarthWeatherService($scope, lat, lng);
+                    }
+                }
+            ]
+        })
+    }
+*/
+    
 }])
 
 .controller('SettingsController', ['$scope', '$http', '$ionicModal', function ($scope, $http, $ionicModal) {
@@ -190,11 +214,12 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
     }
     
     // acknowledgments modal
-    $ionicModal.fromTemplateUrl('acknowledgments.html', {
+    $ionicModal.fromTemplateUrl('templates/acknowledgments.html', {
         scope: $scope,
         animation: 'slide-in-up'
     }).then(function(modal) {
         $scope.modal = modal;
+        $scope.modal.show();
     });
     $scope.openModal = function() {
         $scope.modal.show();
@@ -209,24 +234,3 @@ setLocation = function(lat, lng){
     window.localStorage['lat'] = lat;
     window.localStorage['lng'] = lng;
 }
-
-/*
-
-$scope.showRetryEarthLocation = function() {
-    var myPopup = $ionicPopup.show({
-        template: 'Your connection to Curiosity has gone haywire.',
-        title: 'Mars Weather Error',
-        scope: $scope,
-        buttons: [
-            { text: 'Cancel' },
-            {
-                text: '<b>Retry</b>',
-                type: 'button-positive',
-                onTap: function(e) {
-                $scope.getMarsWeatherData();
-                }
-            }
-        ]
-    })
-}
-*/
