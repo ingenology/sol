@@ -7876,17 +7876,85 @@ ion-modal-view.modal {
       margin-bottom: 15px; }
   #settings h2:last-of-type {
     margin-bottom: 15px; }
+  #settings .button-bar {
+    position: relative; }
   #settings form {
-    clear: both;
-    margin-top: 1.4em;
-    float: right; }
+    position: absolute;
+    z-index: 2;
+    width: 50%;
+    margin: 0 !important;
+    right: 0px;
+    -webkit-transition: .2s ease-out;
+    transition: .2s ease-out;
+    top: -50%;
+    opacity: 0; }
+    #settings form.active {
+      opacity: 1;
+      top: 12px; }
+    #settings form .error {
+      color: maroon;
+      text-align: center;
+      position: relative;
+      width: 100%;
+      font-size: .8em;
+      -webkit-animation-name: pulsate;
+      -webkit-animation-duration: .4s;
+      -webkit-animation-timing-function: linear;
+      -webkit-animation-iteration-count: 3; }
+    #settings form .success {
+      display: none;
+      color: white;
+      position: absolute;
+      top: -2px;
+      right: 12px;
+      font-size: 24px; }
+      #settings form .success.valid {
+        display: block;
+        -webkit-animation-name: pulsate;
+        -webkit-animation-duration: .4s;
+        -webkit-animation-timing-function: linear;
+        -webkit-animation-iteration-count: 3; }
   #settings input {
-    background: #1f2a30;
-    padding-left: 1em;
+    background: transparent !important;
     text-align: center;
-    color: #c4c3c3; }
-  #settings a.button.button-dark {
-    background-color: #31b8a3; }
+    color: white;
+    width: 90%;
+    margin: 0 auto !important;
+    padding: 0;
+    height: 60%;
+    font-size: 16px;
+    -webkit-transition: .2s ease-out;
+    transition: .2s ease-out; }
+  #settings .active label {
+    display: block;
+    position: absolute;
+    left: 50%;
+    margin-left: -28px;
+    top: 38px;
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 3s; }
+  #settings label {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s linear 0.1s, opacity 0.1s linear; }
+  #settings .button {
+    overflow: visible; }
+  #settings .button div {
+    position: absolute;
+    z-index: 2000;
+    display: block;
+    left: 50%;
+    margin-left: -33px;
+    -webkit-transition: .2s ease-out;
+    transition: .2s ease-out; }
+  #settings .button.button-dark {
+    background-color: #31b8a3;
+    border-color: #31b8a3; }
+    #settings .button.button-dark div {
+      font-size: 0.8em;
+      -webkit-transform: translateY(100%);
+      transform: translateY(100%); }
   #settings.acknowledgments {
     background: black; }
 
@@ -7895,19 +7963,6 @@ ion-modal-view.modal {
 
 sup {
   top: -0.3em; }
-
-@-webkit-keyframes pulsate {
-  0% {
-    opacity: .70; }
-
-  72% {
-    opacity: .40; }
-
-  80% {
-    opacity: .9; }
-
-  100% {
-    opacity: .70; } }
 
 #tutorial {
   background-color: transparent;
@@ -7954,3 +8009,16 @@ sup {
 
 .slide-in-up.ng-enter-active, .slide-in-up > .ng-enter-active {
   background: rgba(0, 0, 0, 0.867); }
+
+@-webkit-keyframes pulsate {
+  0% {
+    opacity: .70; }
+
+  72% {
+    opacity: .40; }
+
+  80% {
+    opacity: .9; }
+
+  100% {
+    opacity: .70; } }

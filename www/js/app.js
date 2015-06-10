@@ -168,7 +168,7 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
     
 }])
 
-.controller('SettingsController', ['$scope', '$http', '$ionicModal', function ($scope, $http, $ionicModal) {
+.controller('SettingsController', ['$scope', '$http', '$ionicModal', 'Factories', function ($scope, $http, $ionicModal, Factories) {
     //check local storage first, or set it to one and wait until user sets it.
     
     // TempScale settings
@@ -209,17 +209,29 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
         if (zipCodeForm.zipCode.$valid = true) {
             zipCode = this.zipCode;
             window.localStorage['zipCode'] = zipCode;
+            
             Factories.LocationFromZipService(zipCode);
+        }
+    }
+    
+    // focus on the zip code input after touchin button
+    $scope.zipCodeInputFocus = function($scope) {
+        return {
+            link: {
+                post: function($scope, element, attr) {
+                    console.log('zipcode focus');
+                    element[0].focus();
+                }
+            }
         }
     }
     
     // acknowledgments modal
     $ionicModal.fromTemplateUrl('templates/acknowledgments.html', {
         scope: $scope,
-        animation: 'slide-in-up'
+        animation: 'slide-in-out' // this ain't werkin
     }).then(function(modal) {
         $scope.modal = modal;
-        $scope.modal.show();
     });
     $scope.openModal = function() {
         $scope.modal.show();
