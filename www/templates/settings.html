@@ -14,14 +14,16 @@
         <p>Choose how you will show location.</p>
         <div class="button-bar">
             <form id="zipCodeForm" ng-class="{'active': isLocator('zip')}" name="zipCodeForm">
-                <input type="number"
+                <input type="tel"
+                       pattern="[0-9]*"
                        name="zipCode"
+                       class="zipCode"
+                       id="zipCode"
                        ng-model="zipCode"
                        ng-minlength="5"
-                       ng-maxlength="5"
-                       placeholder="Enter zipcode"
+                       ng-6666="5"
                        ng-change='setZipCode()'
-                       auto-focus
+                       focus-me="{{shouldBeOpen}}"
                        >
                 <i ng-class="{'valid' : zipCodeForm.zipCode.$valid}" class="success ion-checkmark">
                 </i>
@@ -31,7 +33,7 @@
                 </div>
             </form>
             <a class="button" ng-class="{'button-dark': isLocator('device')}" ng-click="setLocator('device')">Device GPS</a>
-            <div class="button" ng-class="{'button-dark': isLocator('zip')}" ng-click="setLocator('zip'); zipCodeInputFocus('zipCode')">
+            <div class="button" ng-class="{'button-dark': isLocator('zip')}" ng-click="setLocator('zip')">
                 <div>Zip Code</div>
             </div>
         </div>

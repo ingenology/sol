@@ -32,7 +32,7 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
             templateUrl: 'templates/settings.html',
             controller: 'SettingsController'
         })
-    $urlRouterProvider.otherwise('/settings');
+    $urlRouterProvider.otherwise('/planets');
 })
 
 .controller('PlanetsController', ['$location', '$scope', '$http', 'Factories', '$cordovaSocialSharing', '$ionicModal', 'ModalService', '$ionicPopup', function ($location, $scope, $http, Factories, $cordovaSocialSharing, $ionicModal, ModalService, $ionicPopup) {
@@ -168,7 +168,7 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
     
 }])
 
-.controller('SettingsController', ['$scope', '$http', '$ionicModal', 'Factories', function ($scope, $http, $ionicModal, Factories) {
+.controller('SettingsController', ['$scope', '$http', '$ionicModal', 'Factories', '$cordovaKeyboard', function ($scope, $http, $ionicModal, Factories, $cordovaKeyboard) {
     //check local storage first, or set it to one and wait until user sets it.
     
     // TempScale settings
@@ -191,9 +191,18 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
     } else {
         $scope.Locator = 'device';
     }
+    
     $scope.setLocator = function(type) {
         $scope.Locator = type;
+        if ($scope.Locator == 'device') {
+            $cordovaKeyboard.close();
+            $scope.shouldBeOpen = false;
+        } else if ($scope.Locator == 'zip') {
+            $cordovaKeyboard.isVisible();
+            $scope.shouldBeOpen = true;
+        }
     };
+    
     $scope.isLocator = function(type) {
         window.localStorage['locator'] = $scope.Locator;
         return type === $scope.Locator;
@@ -214,22 +223,10 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
         }
     }
     
-    // focus on the zip code input after touchin button
-    $scope.zipCodeInputFocus = function($scope) {
-        return {
-            link: {
-                post: function($scope, element, attr) {
-                    console.log('zipcode focus');
-                    element[0].focus();
-                }
-            }
-        }
-    }
-    
     // acknowledgments modal
     $ionicModal.fromTemplateUrl('templates/acknowledgments.html', {
         scope: $scope,
-        animation: 'slide-in-out' // this ain't werkin
+        animation: 'slide-in-up' // this ain't werkin
     }).then(function(modal) {
         $scope.modal = modal;
     });
