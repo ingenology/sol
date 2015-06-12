@@ -24,6 +24,7 @@ app.factory('Factories', function($http) {
             })
             .error(function(jqXHR, textStatus){
                 console.log(textStatus+' on the google maps');
+                scope.LocationFromZipServiceErrorHandler(textStatus);
             });
         },
         
@@ -48,47 +49,21 @@ app.factory('Factories', function($http) {
 
             function error(err) {
                 var msg = err.message;
-                console.log('LocationService Factory error(' + err.code + '): ' + msg);
-/*
                 switch(err.code){
-                case 0:
-                    msg = 'There was an error while retrieving your location: ' + err.message);
-                break;
-                case 1:
-                    msg = 'The user prevented this page from retrieving a location.';
-                break;
-                case 2:
-                    msg = 'The browser was unable to determine your location: ' + err.message;
-                break;
-                case 3:
-                    msg = 'The browser timed out before retrieving the location.';
-                break;
+                    case 0: msg = 'There was an error while retrieving your location: ' + err.message;
+                        break;
+                    case 1: msg = 'The user prevented this page from retrieving a location.';
+                        break;
+                    case 2: msg = 'The app was unable to determine your location: ' + err.message;
+                        break;
+                    case 3: msg = 'The app timed out before retrieving the location.';
+                        break;
                 }
-*/
+                console.log('LocationService Factory error(' + err.code + '): ' + msg);
+                scope.LocationServiceErrorHandler(msg);
             };
             
             navigator.geolocation.watchPosition(success, error, options);
-            
-            // error modal
-/*
-            scope.showRetryLocationService = function(msg) {
-                var myPopup = $ionicPopup.show({
-                    template: msg,
-                    title: 'Location Error',
-                    scope: $scope,
-                    buttons: [
-                        { text: 'Cancel' },
-                        {
-                            text: '<b>Retry</b>',
-                            type: 'button-positive',
-                            onTap: function(e) {
-                            LocationService();
-                            }
-                        }
-                    ]
-                })
-            }
-*/
         },
         
         EarthWeatherService: function(scope, lat, lng) {
@@ -114,12 +89,15 @@ app.factory('Factories', function($http) {
                 temp.list[0].temp.day = temp.list[0].temp.day.toFixed(1);
                 scope.earthTempLoading = false;
                 scope.earthWeather = temp;
+/*
                 console.log('EarthWeatherService Factory sez day temp = ' + temp.list[0].temp.day );
                 console.log('EarthWeatherService Factory sez lat and long it is using are '+lat+' and '+lng);
                 console.log('EarthWeatherService Factory sez city is ' + scope.earthWeather.city.name );
+*/
             })
             .error(function(jqXHR, textStatus) {
                 console.log(textStatus+' Error on the Earth Weather Data factory');
+                scope.earthWeatherServiceErrorHandler();
             });
         }        
     }

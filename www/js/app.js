@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
 
-.run(function($ionicPlatform, $cordovaStatusbar) {
+.run(['$ionicPlatform', '$cordovaStatusbar', function($ionicPlatform, $cordovaStatusbar) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -18,7 +18,7 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
         $cordovaStatusbar.hide();
     }
   });
-})
+}])
 
 .config(function($stateProvider, $urlRouterProvider){
     $stateProvider
@@ -32,7 +32,7 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
             templateUrl: 'templates/settings.html',
             controller: 'SettingsController'
         })
-    $urlRouterProvider.otherwise('/planets');
+    $urlRouterProvider.otherwise('/');
 })
 
 .controller('PlanetsController', ['$location', '$scope', '$http', 'Factories', '$cordovaSocialSharing', '$ionicModal', 'ModalService', '$ionicPopup', function ($location, $scope, $http, Factories, $cordovaSocialSharing, $ionicModal, ModalService, $ionicPopup) {
@@ -123,6 +123,8 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
     }
     
     // Error Helpers
+    // TODO: d.n.r.y. duh!
+    
     // this mars weather feed connection error calls this popup.
     $scope.showRetryMars = function() {
         var popup = $ionicPopup.show({
@@ -145,9 +147,46 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
         })
     }
     
-    // the error for inability to get lat and lng from zip code
-/*
-    $scope.showRetryEarthWeatherService = function($scope, lat, lng) {
+    // the error for inability to get lat and lng from device 
+    $scope.LocationServiceErrorHandler = function(msg) {
+        var myPopup = $ionicPopup.show({
+            template: msg,
+            title: 'Location Error',
+            scope: $scope,
+            buttons: [
+                { text: 'Cancel' },
+                {
+                    text: '<b>Retry</b>',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                        Factories.LocationService();
+                    }
+                }
+            ]
+        })
+    }
+    
+    // the error for inability to get lat and lng from Zip Code 
+    $scope.LocationFromZipServiceErrorHandler = function(textStatus) {
+        var myPopup = $ionicPopup.show({
+            template: 'Having an issue resolving the zip code with Google Maps. Error: ' + textStatus,
+            title: 'Location Error',
+            scope: $scope,
+            buttons: [
+                { text: 'Cancel' },
+                {
+                    text: '<b>Retry</b>',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                        Factories.LocationFromZipService();
+                    }
+                }
+            ]
+        })
+    }
+    
+    // earth weather error handler
+    $scope.earthWeatherServiceErrorHandler = function($scope, lat, lng) {
         var popup = $ionicPopup.show({
             template: 'Your connection to the weather man has been interrupted.',
             title: 'Earth Weather Error',
@@ -158,13 +197,12 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
                     text: '<b>Retry</b>',
                     type: 'button-positive',
                     onTap: function(e) {
-                    Factories.EarthWeatherService($scope, lat, lng);
+                        Factories.EarthWeatherService($scope, lat, lng);
                     }
                 }
             ]
         })
     }
-*/
     
 }])
 
