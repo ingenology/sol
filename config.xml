@@ -2,10 +2,10 @@
 <widget id="com.ionicframework.sol635050" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>sol</name>
   <description>
-        An Ionic Framework and Cordova project.
+        The world's first interstellar weather app which receives weather data from the Mars Curiosity rover. A NASA Space Apps Challenge on the Ionic Framework and Cordova project.
     </description>
-  <author email="hi@ionicframework" href="http://ionicframework.com/">
-      Ionic Framework Team
+  <author email="admins@uncommonsense.com" href="http://salvaorenick.com/">
+      The Salva O'Renick/Ingenology Development Team
     </author>
   <content src="index.html"/>
   <access origin="*"/>
