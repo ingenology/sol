@@ -7716,14 +7716,18 @@ a.button {
 
 .earthPlanet {
   background-image: url(../img/earth@2x.png);
-  -webkit-animation: orbit 900s linear infinite; }
+  -webkit-animation: orbit 365s linear infinite; }
+  .earthPlanet.loading {
+    -webkit-animation: orbit 24s ease-in-out infinite; }
 
 .moonPlanet {
   background-image: url(../img/moon@2x.png); }
 
 .marsPlanet {
   background-image: url(../img/mars@2x.png);
-  -webkit-animation: orbit 1200s linear infinite; }
+  -webkit-animation: orbit 687s linear infinite; }
+  .marsPlanet.loading {
+    -webkit-animation: orbit 24s ease-in-out infinite; }
 
 ion-modal-view.modal {
   background: rgba(0, 0, 0, 0.8); }
@@ -7767,7 +7771,7 @@ ion-modal-view.modal {
   z-index: 2;
   width: 96%;
   padding: 4px 4px 6px;
-  margin: 4px 2%; }
+  margin: 0 2%; }
   .weather h1, .weather h2 {
     text-align: center;
     font-size: 30px; }

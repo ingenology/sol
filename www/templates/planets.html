@@ -1,16 +1,14 @@
 <ion-pane id="planets" class="{{active}}" ng-init="getWeatherData()" cache-view="false">
-    <a ng-click="toggleEarth()" class="earthPlanet">
+    <a ng-click="toggleEarth()" ng-class="earthTempLoading ? 'loading' : ''" class="earthPlanet">
     </a>
     <h1 ng-click="toggleEarth()" class="temp top">
         <span ng-show="!earthTempLoading" ng-cloak>{{ earthWeather.list[0].temp.day }}<sup>&deg;</sup></span>
-        <i class="ion-ios-loop" ng-show="earthTempLoading" ng-cloak ></i>
     </h1>
     <a ui-sref="settings" class="moonPlanet"></a>
     <h1 ng-click="toggleMars()" class="temp bottom">
         <span ng-show="!marsTempLoading" ng-cloak>{{ marsWeather.max_temp_fahrenheit }}<sup>&deg;</sup></span>
-        <i class="ion-ios-loop" ng-show="marsTempLoading" ng-cloak ></i>
     </h1>
-    <a ng-click="toggleMars()" class="marsPlanet">
+    <a ng-click="toggleMars()" ng-class="marsTempLoading ? 'loading' : ''" class="marsPlanet">
     </a>
     <div id="mars" class="weather">
         <h1><img src="img/mars_heading@2x.png"></h1>
