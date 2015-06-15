@@ -112,10 +112,18 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
         if (!window.localStorage['viewedTutorial']) {
 			ModalService.init('templates/tutorial.html', $scope).then(function(modal) {
 				modal.show();
+				$scope.earthWeather.list = [];
+				$scope.earthWeather.list[0] = {};
+				$scope.earthWeather.list[0].temp = {};
+				$scope.earthWeather.list[0].temp.day = 72;
+                $scope.marsWeather = {};
+				$scope.marsWeather.max_temp_fahrenheit = 100;
 			});
+		} else {
+    		$scope.getMarsWeatherData();
+            $scope.getEarthWeatherData();
 		}
-        $scope.getMarsWeatherData();
-        $scope.getEarthWeatherData();
+        
     }
     
     $scope.share = function() {
