@@ -14,7 +14,6 @@
         <ion-content>
             <ion-refresher on-refresh="getMarsWeatherData()"></ion-refresher>
                 <h1><img src="img/mars_heading@2x.png"></h1>
-                <h2 ng-show="marsWeatherError" class="ng-hide">{{marsWeatherError}}</h2>
                 <h2><i class="ion-arrow-up-c"></i> {{marsWeather.max_temp_fahrenheit}}<sup>&deg;</sup> / <i class="ion-arrow-down-c"></i> {{marsWeather.min_temp_fahrenheit}}<sup>&deg;</sup>
                 </h2>
                 <div class="data">
@@ -30,7 +29,6 @@
         <ion-content>
             <ion-refresher on-refresh="getEarthWeatherData()"></ion-refresher>
             <h1><img src="img/earth_heading@2x.png"></h1>
-            <h2 ng-show="earthWeatherError" class="ng-hide">{{earthWeatherError}}</h2>
             <h2><i class="ion-arrow-up-c"></i> {{earthWeather.list[0].temp.max}}<sup>&deg;</sup> / <i class="ion-arrow-down-c"></i> {{earthWeather.list[0].temp.min}}<sup>&deg;</sup>
             </h2>
             <div class="data">

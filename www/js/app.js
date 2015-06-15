@@ -74,7 +74,6 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
         .error(function(jqXHR, textStatus){
             console.log(textStatus + ' on the getMarsWeatherData app.js ln 72');
             $scope.showRetryMars();
-            $scope.marsWeatherError = 'Error ' + textStatus + '. Your connection to Curiosity has gone haywire.';
         });
     };
     
