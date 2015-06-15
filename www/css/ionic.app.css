@@ -7684,20 +7684,25 @@ a.button {
   background-repeat: no-repeat;
   height: 100%; }
 
-#planets h1.temp {
-  font-size: 4.6em;
-  color: white;
-  position: absolute;
-  z-index: 2;
-  text-shadow: 1px 0px 1px #ccc, 0px 1px 1px #110d1f;
+#planets {
+  height: 100%;
+  position: relative;
   width: 100%;
-  text-align: center;
-  color: white;
-  margin: 0; }
-  #planets h1.temp.top {
-    top: 12px; }
-  #planets h1.temp.bottom {
-    bottom: 12px; }
+  display: block; }
+  #planets h1.temp {
+    font-size: 4.6em;
+    color: white;
+    position: absolute;
+    z-index: 2;
+    text-shadow: 1px 0px 1px #ccc, 0px 1px 1px #110d1f;
+    width: 100%;
+    text-align: center;
+    color: white;
+    margin: 0; }
+    #planets h1.temp.top {
+      top: 12px; }
+    #planets h1.temp.bottom {
+      bottom: 12px; }
 
 .ion-load-c, .ion-ios-loop {
   -webkit-animation: orbit 1s linear infinite; }
@@ -7767,7 +7772,10 @@ ion-modal-view.modal {
 
 .weather {
   background: #000f16;
+  display: block;
   position: absolute;
+  height: 520px;
+  background: rgba(0, 0, 0, 0.9);
   z-index: 2;
   width: 96%;
   padding: 4px 4px 6px;

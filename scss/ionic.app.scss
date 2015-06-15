@@ -32,6 +32,10 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
     height: 100%;
 }
 #planets {
+    height: 100%;
+    position: relative;
+    width: 100%;
+    display: block;
     h1.temp {
         font-size: 4.6em;
         color: white;
@@ -132,7 +136,10 @@ ion-modal-view.modal {
 // weather data
 .weather {
     background: #000f16;
+    display: block;
     position: absolute;
+    height: 520px;
+    background: rgba(0, 0, 0, 0.9);
     z-index: 2;
     width: 96%;
     padding:4px 4px 6px;

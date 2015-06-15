@@ -11,28 +11,35 @@
     <a ng-click="toggleMars()" ng-class="marsTempLoading ? 'loading' : ''" class="marsPlanet">
     </a>
     <div id="mars" class="weather">
-        <h1><img src="img/mars_heading@2x.png"></h1>
-        <h2 ng-show="marsWeatherError" class="ng-hide">{{marsWeatherError}}</h2>
-        <h2><i class="ion-arrow-up-c"></i> {{marsWeather.max_temp_fahrenheit}}<sup>&deg;</sup> / <i class="ion-arrow-down-c"></i> {{marsWeather.min_temp_fahrenheit}}<sup>&deg;</sup>
-        </h2>
-        <div class="data">
-            <div><img src="img/date_icon_red@2x.png"><span class="left">SOL DATE</span><span class="right">{{marsWeather.terrestrial_date}}</span></div>
-            <div><img src="img/season_icon_red@2x.png"><span class="left">SEASON</span><span class="right">{{marsWeather.season}}</span></div>
-            <div><img src="img/pressure_icon_red@2x.png"><span class="left">ATMOSPHERIC PRESSURE</span><span class="right">{{marsWeather.pressure}}<span class="noUppercase">hPa</span></span></div>
-            <div><img src="img/sharing_icon_red@2x.png"><span class="left">SOCIAL SHARING</span><span class="right"><a class="button" ng-click="share()">SHARE</a></span></span></div>
-        </div>
+        <ion-content>
+            <ion-refresher on-refresh="getMarsWeatherData()"></ion-refresher>
+                <h1><img src="img/mars_heading@2x.png"></h1>
+                <h2 ng-show="marsWeatherError" class="ng-hide">{{marsWeatherError}}</h2>
+                <h2><i class="ion-arrow-up-c"></i> {{marsWeather.max_temp_fahrenheit}}<sup>&deg;</sup> / <i class="ion-arrow-down-c"></i> {{marsWeather.min_temp_fahrenheit}}<sup>&deg;</sup>
+                </h2>
+                <div class="data">
+                    <div><img src="img/date_icon_red@2x.png"><span class="left">SOL DATE</span><span class="right">{{marsWeather.terrestrial_date}}</span></div>
+                    <div><img src="img/season_icon_red@2x.png"><span class="left">SEASON</span><span class="right">{{marsWeather.season}}</span></div>
+                    <div><img src="img/pressure_icon_red@2x.png"><span class="left">ATMOSPHERIC PRESSURE</span><span class="right">{{marsWeather.pressure}}<span class="noUppercase">hPa</span></span></div>
+                    <div><img src="img/sharing_icon_red@2x.png"><span class="left">SOCIAL SHARING</span><span class="right"><a class="button" ng-click="share()">SHARE</a></span></span></div>
+                </div>
+            </ion-list>
+        </ion-content>
     </div>
     <div id="earth" class="weather">
-        <h1><img src="img/earth_heading@2x.png"></h1>
-        <h2 ng-show="earthWeatherError" class="ng-hide">{{earthWeatherError}}</h2>
-        <h2><i class="ion-arrow-up-c"></i> {{earthWeather.list[0].temp.max}}<sup>&deg;</sup> / <i class="ion-arrow-down-c"></i> {{earthWeather.list[0].temp.min}}<sup>&deg;</sup>
-        </h2>
-        <div class="data">
-            <div><img src="img/location_icon@2x.png"><span class="left">YOUR CITY</span><span class="right">{{earthWeather.city.name}} <a class="button" ui-sref="settings">edit</a></span></div>
-            <div><img src="img/date_icon@2x.png"><span class="left">TERRESTERAL DATE</span><span class="right">{{marsWeather.terrestrial_date}}</span></div>
-            <div><img src="img/humidity_icon@2x.png"><span class="left">HUMIDITY</span><span class="right">{{earthWeather.list[0].humidity}}&#37;</span></div>
-            <div><img src="img/pressure_icon@2x.png"><span class="left">ATMOSPHERIC PRESSURE</span><span class="right">{{earthWeather.list[0].pressure}}<span class="noUppercase">hPa</span></span></div>
-            <div><img src="img/sharing_icon@2x.png"><span class="left">SOCIAL SHARING</span><span class="right"><a class="button share" ng-click="share()">SHARE</a></span></span></div>
-        </div>
+        <ion-content>
+            <ion-refresher on-refresh="getEarthWeatherData()"></ion-refresher>
+            <h1><img src="img/earth_heading@2x.png"></h1>
+            <h2 ng-show="earthWeatherError" class="ng-hide">{{earthWeatherError}}</h2>
+            <h2><i class="ion-arrow-up-c"></i> {{earthWeather.list[0].temp.max}}<sup>&deg;</sup> / <i class="ion-arrow-down-c"></i> {{earthWeather.list[0].temp.min}}<sup>&deg;</sup>
+            </h2>
+            <div class="data">
+                <div><img src="img/location_icon@2x.png"><span class="left">YOUR CITY</span><span class="right">{{earthWeather.city.name}} <a class="button" ui-sref="settings">edit</a></span></div>
+                <div><img src="img/date_icon@2x.png"><span class="left">TERRESTERAL DATE</span><span class="right">{{marsWeather.terrestrial_date}}</span></div>
+                <div><img src="img/humidity_icon@2x.png"><span class="left">HUMIDITY</span><span class="right">{{earthWeather.list[0].humidity}}&#37;</span></div>
+                <div><img src="img/pressure_icon@2x.png"><span class="left">ATMOSPHERIC PRESSURE</span><span class="right">{{earthWeather.list[0].pressure}}<span class="noUppercase">hPa</span></span></div>
+                <div><img src="img/sharing_icon@2x.png"><span class="left">SOCIAL SHARING</span><span class="right"><a class="button share" ng-click="share()">SHARE</a></span></span></div>
+            </div>
+        </ion-content>
     </div>
 </ion-pane>
