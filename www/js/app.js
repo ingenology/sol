@@ -64,6 +64,7 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
         .success(function(data){
             $scope.marsWeather = data.report;
             $scope.marsTempLoading = false;
+            $scope.$broadcast('scroll.refreshComplete');
             if (window.localStorage['tempScale'] != 'Farenheit') {
                 $scope.marsWeather.max_temp_fahrenheit = ((data.report.max_temp_fahrenheit - 32) * 1.8).toFixed(1);
                 $scope.marsWeather.min_temp_fahrenheit = ((data.report.min_temp_fahrenheit - 32) * 1.8).toFixed(1);

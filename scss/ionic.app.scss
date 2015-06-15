@@ -138,7 +138,6 @@ ion-modal-view.modal {
     background: #000f16;
     display: block;
     position: absolute;
-    height: 520px;
     background: rgba(0, 0, 0, 0.9);
     z-index: 2;
     width: 96%;
@@ -164,6 +163,7 @@ ion-modal-view.modal {
         padding: 12px;
     }
     &#mars {
+        height: 460px;
         top: -100%;
         transition: top .4s ease-in-out;
         -webkit-transition: top .4s ease-in-out;
@@ -178,6 +178,7 @@ ion-modal-view.modal {
         }
     }
     &#earth {
+        height: 520px;
         bottom: -100%;
         transition: bottom .4s ease-in-out;
         -webkit-transition: bottom .4s ease-in-out;

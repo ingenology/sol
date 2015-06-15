@@ -88,6 +88,7 @@ app.factory('Factories', function($http) {
                 temp.list[0].temp.min = temp.list[0].temp.min.toFixed(1);
                 temp.list[0].temp.day = temp.list[0].temp.day.toFixed(1);
                 scope.earthTempLoading = false;
+                scope.$broadcast('scroll.refreshComplete');
                 scope.earthWeather = temp;
 /*
                 console.log('EarthWeatherService Factory sez day temp = ' + temp.list[0].temp.day );
@@ -98,6 +99,7 @@ app.factory('Factories', function($http) {
             .error(function(jqXHR, textStatus) {
                 console.log(textStatus+' Error on the Earth Weather Data factory');
                 scope.earthWeatherServiceErrorHandler();
+                $scope.$broadcast('scroll.refreshComplete');
             });
         }        
     }
