@@ -35,7 +35,7 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
     $urlRouterProvider.otherwise('/');
 })
 
-.controller('PlanetsController', ['$location', '$scope', '$http', 'Factories', '$cordovaSocialSharing', '$ionicModal', 'ModalService', '$ionicPopup', function ($location, $scope, $http, Factories, $cordovaSocialSharing, $ionicModal, ModalService, $ionicPopup) {
+.controller('PlanetsController', ['$location', '$scope', '$http', 'Factories', '$cordovaSocialSharing', '$ionicModal', 'ModalService', '$ionicPopup', '$ionicSlideBoxDelegate', function ($location, $scope, $http, Factories, $cordovaSocialSharing, $ionicModal, ModalService, $ionicPopup, $ionicSlideBoxDelegate) {
     // toggle classes on the weather details for their respective planets
     $scope.active = '';
     $scope.earthTempLoading = false;
@@ -107,6 +107,9 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
         $scope.closeModal();
 		window.localStorage['viewedTutorial'] = 'yes';
 	};
+	$scope.nextSlide = function() {
+        $ionicSlideBoxDelegate.next();
+    };
     
     $scope.getWeatherData = function() {
         if (!window.localStorage['viewedTutorial']) {

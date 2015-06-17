@@ -21,6 +21,17 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+@font-face {
+    font-family: 'RobotoLight';
+    src: url("../lib/ionic/fonts/Roboto-Light.ttf");
+    src: url("../lib/ionic/fonts/Roboto-Light.ttf") format("truetype");
+}
+
+body, h1 {
+    font-family: 'RobotoLight', $font-family-light-sans-serif;
+}
+p { font-family: $font-family-sans-serif}
+
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
@@ -48,10 +59,10 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
         color: white;
         margin: 0;
         &.top{
-            top: 12px;
+            top: 0.4em;
         }
         &.bottom{
-            bottom: 12px;
+            bottom: 0.4em;
         }
     }
 }
@@ -370,7 +381,8 @@ ion-modal-view.modal {
         }
     }
     &.acknowledgments {
-        background:black;
+        background:rgba(0, 0, 0, 0.87);
+        min-height: 100%;
     }
 }
 
@@ -384,17 +396,29 @@ sup {
 #tutorial { 
     background-color: transparent;
     height: 100vh;
+    h1 {
+        color: #31b8a3;
+        border-bottom: 1px #31b8a3 solid;
+        display: inline;
+        padding-bottom: 0.2em;
+    }
+    h2 {
+        font-size: 1.3em;
+        padding: 0 1.2em;
+        margin-top: 1.2em;
+        
+    }
     .oval {
-        width: 240px;
-    	height: 100px;
-    	position: absolute;
-    	top: 1em;
-    	left: 50%;
-    	margin-left: -120px;
+        width: 166px;
+        height: 100px;
+        position: absolute;
+        top: 1em;
+        left: 50%;
+        margin-left: -83px;
     	background: transparent;
-    	-webkit-border-radius: 120px / 50px;
+    	-webkit-border-radius: 83px / 50px;
     	border-color: white;
-    	border-width: 4px;
+    	border-width: 2.5px;
     	border-style: solid;
     	-webkit-animation: pulsate 2s linear infinite;
     	&.bottom {
@@ -414,17 +438,17 @@ sup {
         text-align: center;
     }
     .slider-pager {
-        bottom: 50%;
+        bottom: 15em;        
     }
     .directions {
-        margin-top: 26em;
+        margin-top: 46vh;
         position: relative;
     }
-    .one, .slider-slide, .slider {
+    .slider-slide, .slider {
         height: 100%;
     }
     .next {
-        font-size: 1.5em;
+        font-size: 1.3em;
         i {
             font-size: .8em;
         }
@@ -436,7 +460,8 @@ sup {
 }
 
 .slide-in-up.ng-enter-active, .slide-in-up > .ng-enter-active {
-    background: rgba(0, 0, 0, 0.4);
+    background: transparent;
+    height: 100%;
 }
 
 @-webkit-keyframes pulsate {

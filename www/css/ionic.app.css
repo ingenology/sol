@@ -7675,6 +7675,17 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+@font-face {
+  font-family: 'RobotoLight';
+  src: url("../lib/ionic/fonts/Roboto-Light.ttf");
+  src: url("../lib/ionic/fonts/Roboto-Light.ttf") format("truetype"); }
+
+body, h1 {
+  font-family: 'RobotoLight', "HelveticaNeue-Light", "Roboto-Light", "Segoe UI-Light", sans-serif-light; }
+
+p {
+  font-family: "Helvetica Neue", "Roboto", "Segoe UI", sans-serif; }
+
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important; }
 
@@ -7700,9 +7711,9 @@ a.button {
     color: white;
     margin: 0; }
     #planets h1.temp.top {
-      top: 12px; }
+      top: 0.4em; }
     #planets h1.temp.bottom {
-      bottom: 12px; }
+      bottom: 0.4em; }
 
 .ion-load-c, .ion-ios-loop {
   -webkit-animation: orbit 1s linear infinite; }
@@ -7969,7 +7980,8 @@ ion-modal-view.modal {
       -webkit-transform: translateY(100%);
       transform: translateY(100%); }
   #settings.acknowledgments {
-    background: black; }
+    background: rgba(0, 0, 0, 0.87);
+    min-height: 100%; }
 
 .noUppercase {
   text-transform: none; }
@@ -7980,17 +7992,26 @@ sup {
 #tutorial {
   background-color: transparent;
   height: 100vh; }
+  #tutorial h1 {
+    color: #31b8a3;
+    border-bottom: 1px #31b8a3 solid;
+    display: inline;
+    padding-bottom: 0.2em; }
+  #tutorial h2 {
+    font-size: 1.3em;
+    padding: 0 1.2em;
+    margin-top: 1.2em; }
   #tutorial .oval {
-    width: 240px;
+    width: 166px;
     height: 100px;
     position: absolute;
     top: 1em;
     left: 50%;
-    margin-left: -120px;
+    margin-left: -83px;
     background: transparent;
-    -webkit-border-radius: 120px/50px;
+    -webkit-border-radius: 83px/50px;
     border-color: white;
-    border-width: 4px;
+    border-width: 2.5px;
     border-style: solid;
     -webkit-animation: pulsate 2s linear infinite; }
     #tutorial .oval.bottom {
@@ -8006,14 +8027,14 @@ sup {
     color: white;
     text-align: center; }
   #tutorial .slider-pager {
-    bottom: 50%; }
+    bottom: 15em; }
   #tutorial .directions {
-    margin-top: 26em;
+    margin-top: 46vh;
     position: relative; }
-  #tutorial .one, #tutorial .slider-slide, #tutorial .slider {
+  #tutorial .slider-slide, #tutorial .slider {
     height: 100%; }
   #tutorial .next {
-    font-size: 1.5em; }
+    font-size: 1.3em; }
     #tutorial .next i {
       font-size: .8em; }
   #tutorial .button {
@@ -8021,7 +8042,8 @@ sup {
     background: #31b8a3; }
 
 .slide-in-up.ng-enter-active, .slide-in-up > .ng-enter-active {
-  background: rgba(0, 0, 0, 0.4); }
+  background: transparent;
+  height: 100%; }
 
 @-webkit-keyframes pulsate {
   0% {
