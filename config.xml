@@ -14,7 +14,7 @@
   <preference name="UIWebViewBounce" value="false"/>
   <preference name="DisallowOverscroll" value="true"/>
   <preference name="BackupWebStorage" value="none"/>
-  <preference name="Fullscreen" value="true" />
+  <preference name="Fullscreen" value="true"/>
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="false"/>
   </feature>
