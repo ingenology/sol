@@ -30,7 +30,7 @@ app.factory('Factories', function($http) {
         
         LocationService: function(scope) {
             var options = {
-                enableHighAccuracy: true,
+                // enableHighAccuracy: true,
                 timeout: 7000,
                 maximumAge: 240000
             };
@@ -39,7 +39,8 @@ app.factory('Factories', function($http) {
                 var crd = pos.coords,
                     lat = '',
                     lng = '';
-                    
+                
+                // debugger;    
                 console.log('LocationService Factory used and worked');
                 console.log('Lat: ' + crd.latitude);
                 console.log('Long: ' + crd.longitude);
@@ -50,9 +51,9 @@ app.factory('Factories', function($http) {
             function error(err) {
                 var msg = err.message;
                 switch(err.code){
-                    case 0: msg = 'There was an error while retrieving your location: ' + err.message;
+                    case 0: msg = 'There was an error while retrieving your location.';
                         break;
-                    case 1: msg = 'The user prevented this page from retrieving a location.';
+                    case 1: msg = 'The devices is preventing SOL from retrieving your location.';
                         break;
                     case 2: msg = 'The app was unable to determine your location: ' + err.message;
                         break;
@@ -72,7 +73,7 @@ app.factory('Factories', function($http) {
             .success(function(data) {
                 var temp = {};
                 temp = data;
-                
+                // debugger;
                 // do the celcius or fahrenheit conversion from kelvin. using if not celsius to cover null and fahrenheit. defaults fahrenheit
                 if (window.localStorage['tempScale'] != 'Celsius'){
                     temp.list[0].temp.max = data.list[0].temp.max * 1.8 - 459.67;
@@ -90,6 +91,7 @@ app.factory('Factories', function($http) {
                 scope.earthTempLoading = false;
                 scope.$broadcast('scroll.refreshComplete');
                 scope.earthWeather = temp;
+                console.log('EarthWeatherService Factory sez ' + temp.city.name);
 /*
                 console.log('EarthWeatherService Factory sez day temp = ' + temp.list[0].temp.day );
                 console.log('EarthWeatherService Factory sez lat and long it is using are '+lat+' and '+lng);

@@ -57,81 +57,6 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
         }
     }
     
-    // mars weather!
-    $scope.getMarsWeatherData = function() {
-        $scope.marsTempLoading = true;
-        $http.jsonp('http://marsweather.ingenology.com/v1/latest?format=jsonp&callback=JSON_CALLBACK')
-        .success(function(data){
-            $scope.marsWeather = data.report;
-            $scope.marsTempLoading = false;
-            $scope.$broadcast('scroll.refreshComplete');
-            if (window.localStorage['tempScale'] != 'Farenheit') {
-                $scope.marsWeather.max_temp_fahrenheit = ((data.report.max_temp_fahrenheit - 32) * 1.8).toFixed(1);
-                $scope.marsWeather.min_temp_fahrenheit = ((data.report.min_temp_fahrenheit - 32) * 1.8).toFixed(1);
-            }
-            console.log(' app.js ln 69 getMarsWeatherData sez ' + $scope.marsWeather.max_temp_fahrenheit)
-        })
-        .error(function(jqXHR, textStatus){
-            console.log(textStatus + ' on the getMarsWeatherData app.js ln 72');
-            $scope.showRetryMars();
-        });
-    };
-    
-    // earth weather!
-    lat = 39.0997;
-    lng = -94.5783;
-    $scope.earthWeather = {};
-    $scope.getEarthWeatherData = function() {            
-        // if geo, then get lat and long and do the weather
-        // if window, then do the weather
-        // else, you're set in KC, the greatest city on Earph.
-        // then, go run the earth weather
-        var lat, lng;
-            
-        if (window.localStorage['locator'] === 'device') {
-            console.log('app.js ln 86 getEarthWeatherData controller using device locator.');
-            Factories.LocationService();
-        } else if (window.localStorage['lat'] && window.localStorage['lng']) {
-            console.log('app.js ln 89 getEarthWeatherData controller using zip');
-            lat = window.localStorage['lat'];
-            lng = window.localStorage['lng'];
-        } else {
-            lat = 39.0997;
-            lng = -94.5783;
-        }
-        Factories.EarthWeatherService($scope, lat, lng);
-        console.log('app.js ln 97 getEarthWeatherData lat and long: ' + lat + ' and ' + lng)
-    }
-    
-    $scope.finishTutorial = function() {
-        $scope.closeModal();
-		window.localStorage['viewedTutorial'] = 'yes';
-	};
-	$scope.nextSlide = function() {
-        $ionicSlideBoxDelegate.next();
-    };
-    
-    $scope.getWeatherData = function() {
-        if (!window.localStorage['viewedTutorial']) {
-			ModalService.init('templates/tutorial.html', $scope).then(function(modal) {
-				modal.show();
-				$scope.earthWeather.list = [];
-				$scope.earthWeather.list[0] = {};
-				$scope.earthWeather.list[0].temp = {};
-				$scope.earthWeather.list[0].temp.day = 72;
-                $scope.marsWeather = {};
-				$scope.marsWeather.max_temp_fahrenheit = 100;
-			});
-		} else {
-    		$scope.getMarsWeatherData();
-            $scope.getEarthWeatherData();
-		}
-        
-    }
-    
-    $scope.share = function() {
-        $cordovaSocialSharing.share('According to Sol, the first interplanetary weather app, it is '+$scope.earthWeather.list[0].temp.day+' outside in '+ $scope.earthWeather.city.name +'. But on Mars, it is only '+ $scope.max_temp_fahrenheit, null, 'www/imagefile.png', 'http://marsweather.com');
-    }
     
     // Error Helpers
     // TODO: d.n.r.y. duh!
@@ -213,6 +138,82 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
                 }
             ]
         })
+    }
+    
+    // mars weather!
+    $scope.getMarsWeatherData = function() {
+        $scope.marsTempLoading = true;
+        $http.jsonp('http://marsweather.ingenology.com/v1/latest?format=jsonp&callback=JSON_CALLBACK')
+        .success(function(data){
+            $scope.marsWeather = data.report;
+            $scope.marsTempLoading = false;
+            $scope.$broadcast('scroll.refreshComplete');
+            if (window.localStorage['tempScale'] != 'Farenheit') {
+                $scope.marsWeather.max_temp_fahrenheit = ((data.report.max_temp_fahrenheit - 32) * 1.8).toFixed(1);
+                $scope.marsWeather.min_temp_fahrenheit = ((data.report.min_temp_fahrenheit - 32) * 1.8).toFixed(1);
+            }
+            console.log(' app.js ln 69 getMarsWeatherData sez ' + $scope.marsWeather.max_temp_fahrenheit)
+        })
+        .error(function(jqXHR, textStatus){
+            console.log(textStatus + ' on the getMarsWeatherData app.js ln 72');
+            $scope.showRetryMars();
+        });
+    };
+    
+    // earth weather!
+    lat = 39.0997;
+    lng = -94.5783;
+    $scope.earthWeather = {};
+    $scope.getEarthWeatherData = function() {            
+        // if geo, then get lat and long and do the weather
+        // if window, then do the weather
+        // else, you're set in KC, the greatest city on Earph.
+        // then, go run the earth weather
+        var lat, lng;
+            
+        if (window.localStorage['locator'] === 'device') {
+            console.log('app.js ln 86 getEarthWeatherData controller using device locator.');
+            Factories.LocationService();
+        } else if (window.localStorage['lat'] && window.localStorage['lng']) {
+            console.log('app.js ln 89 getEarthWeatherData controller using zip');
+            lat = window.localStorage['lat'];
+            lng = window.localStorage['lng'];
+        } else {
+            lat = 39.0997;
+            lng = -94.5783;
+        }
+        Factories.EarthWeatherService($scope, lat, lng);
+        console.log('app.js ln 97 getEarthWeatherData lat and long: ' + lat + ' and ' + lng)
+    }
+    
+    $scope.finishTutorial = function() {
+        $scope.closeModal();
+		window.localStorage['viewedTutorial'] = 'yes';
+	};
+	$scope.nextSlide = function() {
+        $ionicSlideBoxDelegate.next();
+    };
+    
+    $scope.getWeatherData = function() {
+        if (!window.localStorage['viewedTutorial']) {
+			ModalService.init('templates/tutorial.html', $scope).then(function(modal) {
+				modal.show();
+				$scope.earthWeather.list = [];
+				$scope.earthWeather.list[0] = {};
+				$scope.earthWeather.list[0].temp = {};
+				$scope.earthWeather.list[0].temp.day = 72;
+                $scope.marsWeather = {};
+				$scope.marsWeather.max_temp_fahrenheit = 100;
+			});
+		} else {
+    		$scope.getMarsWeatherData();
+            $scope.getEarthWeatherData();
+		}
+        
+    }
+    
+    $scope.share = function() {
+        $cordovaSocialSharing.share('According to Sol, the first interplanetary weather app, it is '+$scope.earthWeather.list[0].temp.day+' outside in '+ $scope.earthWeather.city.name +'. But on Mars, it is only '+ $scope.max_temp_fahrenheit, null, 'www/imagefile.png', 'http://marsweather.com');
     }
     
 }])
