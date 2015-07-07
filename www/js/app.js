@@ -17,6 +17,9 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
     } else {
         $cordovaStatusbar.hide();
     }
+    setTimeout(function() {
+        navigator.splashscreen.hide();
+    }, 2000)
   });
 }])
 
@@ -35,7 +38,7 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
     $urlRouterProvider.otherwise('/');
 })
 
-.controller('PlanetsController', ['$location', '$scope', '$http', 'Factories', '$cordovaSocialSharing', '$ionicModal', 'ModalService', '$ionicPopup', '$ionicSlideBoxDelegate', function ($location, $scope, $http, Factories, $cordovaSocialSharing, $ionicModal, ModalService, $ionicPopup, $ionicSlideBoxDelegate) {
+.controller('PlanetsController', ['$location', '$scope', '$http', 'Factories', '$cordovaSocialSharing', '$ionicModal', 'ModalService', '$ionicPopup', '$ionicSlideBoxDelegate', '$ionicPlatform', function ($location, $scope, $http, Factories, $cordovaSocialSharing, $ionicModal, ModalService, $ionicPopup, $ionicSlideBoxDelegate, $ionicPlatform) {
     // toggle classes on the weather details for their respective planets
     $scope.active = '';
     $scope.earthTempLoading = false;
@@ -169,21 +172,23 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
         // if window, then do the weather
         // else, you're set in KC, the greatest city on Earph.
         // then, go run the earth weather
-        var lat, lng;
-            
-        if (window.localStorage['locator'] === 'device') {
-            console.log('app.js ln 86 getEarthWeatherData controller using device locator.');
-            Factories.LocationService();
-        } else if (window.localStorage['lat'] && window.localStorage['lng']) {
-            console.log('app.js ln 89 getEarthWeatherData controller using zip');
-            lat = window.localStorage['lat'];
-            lng = window.localStorage['lng'];
-        } else {
-            lat = 39.0997;
-            lng = -94.5783;
-        }
-        Factories.EarthWeatherService($scope, lat, lng);
-        console.log('app.js ln 97 getEarthWeatherData lat and long: ' + lat + ' and ' + lng)
+        $ionicPlatform.ready(function() {
+            var lat, lng;
+                
+            if (window.localStorage['locator'] === 'device') {
+                console.log('app.js ln 86 getEarthWeatherData controller using device locator.');
+                Factories.LocationService();
+            } else if (window.localStorage['lat'] && window.localStorage['lng']) {
+                console.log('app.js ln 89 getEarthWeatherData controller using zip');
+                lat = window.localStorage['lat'];
+                lng = window.localStorage['lng'];
+            } else {
+                lat = 39.0997;
+                lng = -94.5783;
+            }
+            Factories.EarthWeatherService($scope, lat, lng);
+            console.log('app.js ln 97 getEarthWeatherData lat and long: ' + lat + ' and ' + lng)
+        });
     }
     
     $scope.finishTutorial = function() {
@@ -213,7 +218,7 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
     }
     
     $scope.share = function() {
-        $cordovaSocialSharing.share('According to Sol, the first interplanetary weather app, it is '+$scope.earthWeather.list[0].temp.day+' outside in '+ $scope.earthWeather.city.name +'. But on Mars, it is only '+ $scope.max_temp_fahrenheit, null, 'www/imagefile.png', 'http://marsweather.com');
+        $cordovaSocialSharing.share('According to Sol, the first interplanetary weather app, it is '+$scope.earthWeather.list[0].temp.day+' outside in '+ $scope.earthWeather.city.name +'. But on Mars, it is '+ $scope.marsWeather.max_temp_fahrenheit, null, 'http://marsweather.ingenology.com/static/home/images/rover.jpg', 'http://solweather.com/');
     }
     
 }])
