@@ -7712,8 +7712,14 @@ p {
     margin: 0; }
     #planets h1.temp.top {
       top: 0.4em; }
+      @media (max-width: 320px) {
+        #planets h1.temp.top {
+          top: 0; } }
     #planets h1.temp.bottom {
       bottom: 0.4em; }
+      @media (max-width: 320px) {
+        #planets h1.temp.bottom {
+          bottom: 0; } }
 
 .ion-load-c, .ion-ios-loop {
   -webkit-animation: orbit 1s linear infinite; }
@@ -7733,8 +7739,6 @@ p {
 .earthPlanet {
   background-image: url(../img/earth@2x.png);
   -webkit-animation: orbit 365s linear infinite; }
-  .earthPlanet.loading {
-    -webkit-animation: orbit 24s ease-in-out infinite; }
 
 .moonPlanet {
   background-image: url(../img/moon@2x.png); }
@@ -7742,8 +7746,6 @@ p {
 .marsPlanet {
   background-image: url(../img/mars@2x.png);
   -webkit-animation: orbit 687s linear infinite; }
-  .marsPlanet.loading {
-    -webkit-animation: orbit 24s ease-in-out infinite; }
 
 ion-modal-view.modal {
   background: rgba(0, 0, 0, 0.8); }
@@ -7825,6 +7827,9 @@ ion-modal-view.modal {
       color: #289bbc; }
     .earthActive .weather#earth {
       bottom: 0; }
+    @media (max-width: 320px) {
+      .weather#earth {
+        height: 484px; } }
   .weather a.button {
     background: #31b8a3;
     color: white;
@@ -7855,10 +7860,17 @@ ion-modal-view.modal {
     padding: 7px 20px;
     width: 100%;
     overflow: hidden; }
+    @media (max-width: 320px) {
+      .data div {
+        font-size: 13px; } }
     .data div img {
       float: left;
       width: 40px;
       margin: 0px 16px 0 -8px; }
+      @media (max-width: 320px) {
+        .data div img {
+          width: 34px;
+          margin: 0px 12px 0 -10px; } }
     .data div span {
       margin-top: 10px; }
       .data div span.left {
@@ -7874,7 +7886,7 @@ ion-modal-view.modal {
   color: #c4c3c3;
   background: transparent; }
   #settings > div {
-    padding: 1.5em; }
+    padding: 0 1.5em; }
   #settings h1, #settings h2 {
     text-transform: uppercase;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Roboto-Light, sans-serif;
@@ -7896,10 +7908,12 @@ ion-modal-view.modal {
     margin-top: 19px;
     font-size: 1.5em;
     padding: 16px 0 14px; }
-    #settings h2.last {
+    #settings h2:last-of-type {
       margin-bottom: 15px; }
-  #settings h2:last-of-type {
-    margin-bottom: 15px; }
+    @media (max-width: 320px) {
+      #settings h2 {
+        font-size: 1.2em;
+        padding: 11px 0 11px; } }
   #settings .button-bar {
     position: relative; }
   #settings form {

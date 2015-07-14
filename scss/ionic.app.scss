@@ -14,6 +14,7 @@ $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
+$iphone5: 320px;
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
@@ -60,12 +61,20 @@ p { font-family: $font-family-sans-serif}
         margin: 0;
         &.top{
             top: 0.4em;
+            @media (max-width: $iphone5){
+              top:0;
+            }
         }
         &.bottom{
             bottom: 0.4em;
+            @media (max-width: $iphone5){
+              bottom:0;
+            }
         }
     }
 }
+
+
 .ion-load-c, .ion-ios-loop {
     -webkit-animation: orbit 1s linear infinite;
 }
@@ -84,9 +93,6 @@ p { font-family: $font-family-sans-serif}
 .earthPlanet {
     background-image: url(../img/earth@2x.png);
     -webkit-animation: orbit 365s linear infinite;
-    &.loading {
-        -webkit-animation: orbit 24s ease-in-out infinite;
-    }
 }
 .moonPlanet {
     background-image: url(../img/moon@2x.png);
@@ -94,9 +100,6 @@ p { font-family: $font-family-sans-serif}
 .marsPlanet {
     background-image: url(../img/mars@2x.png);
     -webkit-animation: orbit 687s linear infinite;
-    &.loading {
-        -webkit-animation: orbit 24s ease-in-out infinite;
-    }
 }
 
 ion-modal-view.modal {
@@ -110,7 +113,7 @@ ion-modal-view.modal {
     .earthPlanet {
         top: -70vw;
     }
-    
+
     .moonPlanet {
         width: 20vw;
         height: 20vw;
@@ -199,6 +202,9 @@ ion-modal-view.modal {
         .earthActive & {
             bottom: 0;
         }
+        @media (max-width: $iphone5){
+          height: 484px;
+        }
     }
     a.button {
         background: #31b8a3;
@@ -228,10 +234,17 @@ ion-modal-view.modal {
         padding: 7px 20px;
         width: 100%;
         overflow: hidden;
+        @media (max-width: $iphone5){
+          font-size: 13px;
+        }
         img {
             float:left;
             width: 40px;
             margin: 0px 16px 0 -8px;
+            @media (max-width: $iphone5){
+              width: 34px;
+              margin: 0px 12px 0 -10px;
+            }
         }
         span {
             margin-top: 10px;
@@ -254,7 +267,7 @@ ion-modal-view.modal {
     color: #c4c3c3;
     background: transparent;
     > div {
-        padding: 1.5em;
+        padding: 0 1.5em;
     }
     h1, h2 {
         text-transform: uppercase;
@@ -269,7 +282,7 @@ ion-modal-view.modal {
         a {
             color: #c4c3c3;
             text-decoration: none;
-            display: inline-block; 
+            display: inline-block;
             float:right;
         }
     }
@@ -280,17 +293,18 @@ ion-modal-view.modal {
         margin-top: 19px;
         font-size: 1.5em;
         padding: 16px 0 14px;
-        &.last {
+        &:last-of-type {
             margin-bottom: 15px;
         }
-    }
-    h2:last-of-type {
-        margin-bottom: 15px;
+        @media (max-width: $iphone5){
+          font-size: 1.2em;
+          padding: 11px 0 11px;
+        }
     }
     .button-bar {
         position: relative;
     }
-    form { 
+    form {
         position: absolute;
         z-index: 2;
         width: 50%;
@@ -329,7 +343,7 @@ ion-modal-view.modal {
                 -webkit-animation-duration: .4s;
                 -webkit-animation-timing-function: linear;
                 -webkit-animation-iteration-count: 3;
-            }            
+            }
         }
     }
     input {
@@ -393,7 +407,7 @@ sup {
     top: -0.3em;
 }
 
-#tutorial { 
+#tutorial {
     background-color: transparent;
     height: 100vh;
     h1 {
@@ -406,7 +420,7 @@ sup {
         font-size: 1.3em;
         padding: 0 1.2em;
         margin-top: 1.2em;
-        
+
     }
     .oval {
         width: 166px;
@@ -438,7 +452,7 @@ sup {
         text-align: center;
     }
     .slider-pager {
-        bottom: 15em;        
+        bottom: 15em;
     }
     .directions {
         margin-top: 46vh;
