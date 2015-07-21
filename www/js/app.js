@@ -209,10 +209,6 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
         // then, go run the earth weather
 
         // this fx only sets lat and lng and fires the EarthWeatherService
-        $scope.coords = {
-          lat: 69.0997,
-          lng:-94.5783
-        };
         $ionicPlatform.ready(function() {
 
             if (window.localStorage['locator'] === 'device') {
