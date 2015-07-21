@@ -4,7 +4,7 @@ var app = angular.module('sol.Factories', []);
 
 app.factory('Factories', function($http) {
     return {
-        
+
         LocationFromZipService: function(zipCode) {
             var url = 'http://maps.googleapis.com/maps/api/geocode/json?address='+zipCode,
             lat = null,
@@ -27,46 +27,7 @@ app.factory('Factories', function($http) {
                 scope.LocationFromZipServiceErrorHandler(textStatus);
             });
         },
-        
-        LocationService: function(scope) {
-            var options = {
-                // enableHighAccuracy: true,
-                timeout: 7000,
-                maximumAge: 240000
-            };
 
-            function success(pos) {
-                var crd = pos.coords,
-                    lat = '',
-                    lng = '';
-                
-                // debugger;    
-                console.log('LocationService Factory used and worked');
-                console.log('Lat: ' + crd.latitude);
-                console.log('Long: ' + crd.longitude);
-                lat = crd.latitude;
-                lng = crd.longitude;
-            };
-
-            function error(err) {
-                var msg = err.message;
-                switch(err.code){
-                    case 0: msg = 'There was an error while retrieving your location.';
-                        break;
-                    case 1: msg = 'The devices is preventing SOL from retrieving your location.';
-                        break;
-                    case 2: msg = 'The app was unable to determine your location: ' + err.message;
-                        break;
-                    case 3: msg = 'The app timed out before retrieving the location.';
-                        break;
-                }
-                console.log('LocationService Factory error(' + err.code + '): ' + msg);
-                scope.LocationServiceErrorHandler(msg);
-            };
-            
-            navigator.geolocation.watchPosition(success, error, options);
-        },
-        
         EarthWeatherService: function(scope, lat, lng) {
             scope.earthTempLoading = true;
             $http.jsonp('http://api.openweathermap.org/data/2.5/forecast/daily?lat='+lat+'&lon='+lng+'cnt=1&format=jsonp&callback=JSON_CALLBACK')
@@ -84,7 +45,7 @@ app.factory('Factories', function($http) {
                     temp.list[0].temp.min = (data.list[0].temp.min - 273.15);
                     temp.list[0].temp.day = (data.list[0].temp.day - 273.15);
                 }
-                
+
                 temp.list[0].temp.max = temp.list[0].temp.max.toFixed(1);
                 temp.list[0].temp.min = temp.list[0].temp.min.toFixed(1);
                 temp.list[0].temp.day = temp.list[0].temp.day.toFixed(1);
@@ -103,7 +64,7 @@ app.factory('Factories', function($http) {
                 scope.earthWeatherServiceErrorHandler();
                 $scope.$broadcast('scroll.refreshComplete');
             });
-        }        
+        }
     }
 })
 .service('ModalService', function($ionicModal, $rootScope) {
@@ -129,7 +90,7 @@ app.factory('Factories', function($http) {
 		$scope.$on('$destroy', function() {
 			$scope.modal.remove();
 		});
-	    
+
 	    return promise;
 	}
 
@@ -143,9 +104,9 @@ app.factory('Factories', function($http) {
         scope: { trigger: '@focusMe' },
         link: function(scope, element) {
             scope.$watch('trigger', function(value) {
-                if(value === "true") { 
+                if(value === "true") {
                     $timeout(function() {
-                        element[0].focus(); 
+                        element[0].focus();
                     });
                 }
             });
