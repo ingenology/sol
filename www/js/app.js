@@ -88,7 +88,7 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
     }
 
     // the error for inability to get lat and lng from device
-    $scope.LocationServiceErrorHandler = function(msg) {
+    LocationFromLocationServiceErrorHandler = function(msg) {
         var myPopup = $ionicPopup.show({
             template: msg,
             title: 'Location Error',
@@ -99,7 +99,7 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
                     text: '<b>Retry</b>',
                     type: 'button-positive',
                     onTap: function(e) {
-                        Factories.LocationService();
+                        Factories.LocationFromLocationService();
                     }
                 }
             ]
@@ -107,7 +107,7 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
     }
 
     // the error for inability to get lat and lng from Zip Code
-    $scope.LocationFromZipServiceErrorHandler = function(textStatus) {
+    LocationFromZipServiceErrorHandler = function(textStatus) {
         var myPopup = $ionicPopup.show({
             template: 'Having an issue resolving the zip code with Google Maps. Error: ' + textStatus,
             title: 'Location Error',
@@ -138,6 +138,7 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
                     type: 'button-positive',
                     onTap: function(e) {
                         Factories.EarthWeatherService($scope, $scope.coords.lat, $scope.coords.lng);
+                        console.log($scope, $scope.coords.lat, $scope.coords.lng);
                     }
                 }
             ]
@@ -164,58 +165,20 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
         });
     };
 
-    $scope.locationService = function(callback) {
-        var options = {
-            // enableHighAccuracy: true,
-            timeout: 7000,
-            maximumAge: 240000
-        };
-
-        function success(pos) {
-            // debugger;
-            $scope.coords.lat = pos.coords.latitude;
-            $scope.coords.lng = pos.coords.longitude;
-            console.log('LocationService Factory used and worked. Lat set to '+ $scope.coords.lat +' and Long set to ' + $scope.coords.lng);
-
-            if (callback) {
-              console.log('callback');
-              callback();
-            }
-        };
-
-        function error(error) {
-            var msg = error.message;
-            switch(error.code){
-                case 0: msg = 'There was an error while retrieving your location.';
-                    break;
-                case 1: msg = 'The devices is preventing SOL from retrieving your location.';
-                    break;
-                case 2: msg = 'The app was unable to determine your location: ' + error.message;
-                    break;
-                case 3: msg = 'The app timed out before retrieving the location.';
-                    break;
-            }
-            console.log('LocationService Factory error(' + error.code + '): ' + msg);
-            $scope.LocationServiceErrorHandler(msg);
-        };
-
-        navigator.geolocation.watchPosition(success, error, options);
-    };
     $scope.earthWeather = {};
     $scope.getEarthWeatherData = function() {
-        // if geo, then get lat and long and do the weather
-        // if window, then do the weather
-        // else, you're set in KC, the greatest city on Earph.
-        // then, go run the earth weather
-
-        // this fx only sets lat and lng and fires the EarthWeatherService
-        $ionicPlatform.ready(function() {
-
+        // unset lat and lng on return to app.
+        // if you're using device gps, then it will look for your location just once because fetching it constantly isn't the way to go
+        // this fx only uses or gets lat and lng to fire the EarthWeatherService
+        $ionicPlatform.on('resume', function(){
             if (window.localStorage['locator'] === 'device') {
-                $scope.locationService(function() {
-                  Factories.EarthWeatherService($scope, $scope.coords.lat, $scope.coords.lng);
-                });
-            } else if (window.localStorage['lat'] && window.localStorage['lng']) {
+                window.localStorage.removeItem('lat');
+                window.localStorage.removeItem('lng');
+            }
+        });
+        $ionicPlatform.ready(function() {
+            if (window.localStorage['lat'] && window.localStorage['lng']) {
+                // localStorage is set by the LocationFromZipService and the LocationFromLocationService
                 $scope.coords.lat = window.localStorage['lat'];
                 $scope.coords.lng = window.localStorage['lng'];
                 Factories.EarthWeatherService($scope, $scope.coords.lat, $scope.coords.lng);
@@ -224,44 +187,79 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
                 $scope.coords.lng = -94.5783;
                 Factories.EarthWeatherService($scope, $scope.coords.lat, $scope.coords.lng);
             }
-            console.log('app.js ln 230. Device:'+window.localStorage['locator'] + 'lat and long: ' + $scope.coords.lat + ' and ' + $scope.coords.lng)
+            console.log('app.js ln 195. locator: '+window.localStorage['locator'] + ': lat and long: ' + window.localStorage['lat'] + ' and ' + window.localStorage['lng'])
         });
     }
 
-    $scope.finishTutorial = function() {
-        $scope.closeModal();
-		window.localStorage['viewedTutorial'] = 'yes';
-	};
+   $scope.finishTutorial = function() {
+      $scope.closeModal();
+	    window.localStorage['viewedTutorial'] = 'yes';
+	 };
 	$scope.nextSlide = function() {
-        $ionicSlideBoxDelegate.next();
-    };
+      $ionicSlideBoxDelegate.next();
+  };
 
-    $scope.getWeatherData = function() {
-        if (!window.localStorage['viewedTutorial']) {
-			ModalService.init('templates/tutorial.html', $scope).then(function(modal) {
-				modal.show();
-				$scope.earthWeather.list = [];
-				$scope.earthWeather.list[0] = {};
-				$scope.earthWeather.list[0].temp = {};
-				$scope.earthWeather.list[0].temp.day = 72;
-                $scope.marsWeather = {};
-				$scope.marsWeather.max_temp_fahrenheit = 100;
-			});
-		} else {
-    		$scope.getMarsWeatherData();
-            $scope.getEarthWeatherData();
-		}
+   $scope.getWeatherData = function() {
+      if (!window.localStorage['viewedTutorial']) {
+           ModalService.init('templates/tutorial.html', $scope).then(function(modal) {
+           modal.show();
+           $scope.earthWeather.list = [];
+           $scope.earthWeather.list[0] = {};
+           $scope.earthWeather.list[0].temp = {};
+           $scope.earthWeather.list[0].temp.day = 72;
+           $scope.marsWeather = {};
+           $scope.marsWeather.max_temp_fahrenheit = 100;
+         });
+      } else {
+      		$scope.getMarsWeatherData();
+          $scope.getEarthWeatherData();
+      }
+   }
 
-    }
-
-    $scope.share = function() {
-        $cordovaSocialSharing.share('According to Sol, the first interplanetary weather app, it is '+$scope.earthWeather.list[0].temp.day+' outside in '+ $scope.earthWeather.city.name +'. But on Mars, it is '+ $scope.marsWeather.max_temp_fahrenheit, null, 'http://marsweather.ingenology.com/static/home/images/rover.jpg', 'http://solweather.com/');
-    }
+   $scope.share = function() {
+       $cordovaSocialSharing.share('According to Sol, the first interplanetary weather app, it is '+$scope.earthWeather.list[0].temp.day+' outside in '+ $scope.earthWeather.city.name +'. But on Mars, it is '+ $scope.marsWeather.max_temp_fahrenheit, null, 'http://marsweather.ingenology.com/static/home/images/rover.jpg', 'http://solweather.com/');
+   }
 
 }])
 
-.controller('SettingsController', ['$scope', '$http', '$ionicModal', 'Factories', '$cordovaKeyboard', function ($scope, $http, $ionicModal, Factories, $cordovaKeyboard) {
+.controller('SettingsController', ['$scope', '$http', '$ionicModal', '$cordovaKeyboard', '$ionicPopup', 'Factories', function ($scope, $http, $ionicModal, $cordovaKeyboard, $ionicPopup, Factories) {
     //check local storage first, or set it to one and wait until user sets it.
+
+    LocationFromZipServiceErrorHandler = function(textStatus) {
+        var myPopup = $ionicPopup.show({
+            template: 'Having an issue resolving the zip code with Google Maps.',
+            title: 'Location Error',
+            scope: $scope,
+            buttons: [
+                { text: 'Cancel' },
+                {
+                    text: '<b>Retry</b>',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                        Factories.LocationFromZipService();
+                    }
+                }
+            ]
+        })
+    }
+    
+    LocationFromLocationServiceErrorHandler = function(msg) {
+        var myPopup = $ionicPopup.show({
+            template: msg,
+            title: 'Location Error',
+            scope: $scope,
+            buttons: [
+                { text: 'Cancel' },
+                {
+                    text: '<b>Retry</b>',
+                    type: 'button-positive',
+                    onTap: function(e) {
+                        Factories.LocationFromLocationService();
+                    }
+                }
+            ]
+        })
+    }
 
     // TempScale settings
     if (window.localStorage['tempScale']) {
@@ -286,10 +284,14 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
 
     $scope.setLocator = function(type) {
         $scope.Locator = type;
+        console.log($scope.Locator)
+        // delete localStorage lat and lng to trigger restart of location services here?
         if ($scope.Locator == 'device') {
+            Factories.LocationFromLocationService();
             $cordovaKeyboard.close();
             $scope.shouldBeOpen = false;
         } else if ($scope.Locator == 'zip') {
+            Factories.LocationFromZipService();
             $cordovaKeyboard.isVisible();
             $scope.shouldBeOpen = true;
         }
@@ -310,7 +312,6 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
         if (zipCodeForm.zipCode.$valid = true) {
             zipCode = this.zipCode;
             window.localStorage['zipCode'] = zipCode;
-
             Factories.LocationFromZipService(zipCode);
         }
     }
@@ -330,6 +331,70 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
     };
 
 }])
+// .controller('errorPop', ['$scope', '$ionicPopup', '$timeout', function($scope, $ionicPopup, $timeout) {
+//   $scope.errorPop = function() {
+//
+//       $scope.showRetryMars = function() {
+//           var popup = $ionicPopup.show({
+//               template: 'Your connection to Curiosity has gone haywire.',
+//               title: 'Mars Weather Error',
+//               scope: $scope,
+//               buttons: [{
+//                       text: 'Cancel',
+//                       onTap: function(e) {
+//                           $scope.marsTempLoading = false;
+//                       }
+//                   },{
+//                       text: '<b>Retry</b>',
+//                       type: 'button-positive',
+//                       onTap: function(e) {
+//                           $scope.getMarsWeatherData();
+//                       }
+//                   }
+//               ]
+//           })
+//       }
+//
+//       // the error for inability to get lat and lng from device
+//       LocationFromLocationServiceErrorHandler = function(msg) {
+//           var myPopup = $ionicPopup.show({
+//               template: msg,
+//               title: 'Location Error',
+//               scope: $scope,
+//               buttons: [
+//                   { text: 'Cancel' },
+//                   {
+//                       text: '<b>Retry</b>',
+//                       type: 'button-positive',
+//                       onTap: function(e) {
+//                           Factories.LocationFromLocationService();
+//                       }
+//                   }
+//               ]
+//           })
+//       }
+//
+//       // the error for inability to get lat and lng from Zip Code
+//       $scope.LocationFromZipServiceErrorHandler = function(textStatus) {
+//           var myPopup = $ionicPopup.show({
+//               template: 'Having an issue resolving the zip code with Google Maps. Error: ' + textStatus,
+//               title: 'Location Error',
+//               scope: $scope,
+//               buttons: [
+//                   { text: 'Cancel' },
+//                   {
+//                       text: '<b>Retry</b>',
+//                       type: 'button-positive',
+//                       onTap: function(e) {
+//                           Factories.LocationFromZipService();
+//                       }
+//                   }
+//               ]
+//           })
+//       }
+//   }
+//
+// }])
 
 setLocation = function(lat, lng){
     window.localStorage['lat'] = lat;

@@ -2,13 +2,14 @@
 
 var app = angular.module('sol.Factories', []);
 
-app.factory('Factories', function($http) {
+app.factory('Factories', function($http, $injector) {
     return {
 
-        LocationFromZipService: function(zipCode) {
+        LocationFromZipService: function(zipCode, scope) {
             var url = 'http://maps.googleapis.com/maps/api/geocode/json?address='+zipCode,
-            lat = null,
-            lng = null;
+                lat = null,
+                lng = null;
+
             $http({
                 url: url,
                 method: 'GET',
@@ -22,10 +23,54 @@ app.factory('Factories', function($http) {
                 setLocation(lat, lng);
                 console.log('LocationFromZipService factory worked. Lat and long are: '+lat+' and '+lng);
             })
-            .error(function(jqXHR, textStatus){
+            .error(function(jqXHR, textStatus, scope){
                 console.log(textStatus+' on the google maps');
-                scope.LocationFromZipServiceErrorHandler(textStatus);
+                LocationFromZipServiceErrorHandler(textStatus);
             });
+        },
+
+        LocationFromLocationService: function(scope) {
+          var lat = null,
+              lng = null;
+
+          var options = {
+              // enableHighAccuracy: true,
+              timeout: 8000,
+              maximumAge: 240000
+          };
+
+          function success(pos) {
+              // debugger;
+              // scope.coords.lat = pos.coords.latitude;
+              // scope.coords.lng = pos.coords.longitude;
+              lat = pos.coords.latitude;
+              lng = pos.coords.longitude;
+              setLocation(lat, lng);
+              // console.log('LocationService Factory used and worked. Lat set to '+ $scope.coords.lat +' and Long set to ' + $scope.coords.lng);
+              //
+              // if (callback) {
+              //   console.log('callback');
+              //   callback();
+              // }
+          };
+
+          function error(error, scope) {
+              var msg = error.message;
+              switch(error.code){
+                  case 0: msg = 'There was an error while retrieving your location.';
+                      break;
+                  case 1: msg = 'The devices is preventing SOL from retrieving your location.';
+                      break;
+                  case 2: msg = 'The app was unable to determine your location.';
+                      break;
+                  case 3: msg = 'The app timed out before retrieving the location.';
+                      break;
+              }
+              console.log('LocationService Factory error(' + error.code + '): ' + msg);
+              LocationFromLocationServiceErrorHandler(msg);
+          };
+
+          navigator.geolocation.getCurrentPosition(success, error, options);
         },
 
         EarthWeatherService: function(scope, lat, lng) {
@@ -62,7 +107,7 @@ app.factory('Factories', function($http) {
             .error(function(jqXHR, textStatus) {
                 console.log(textStatus+' Error on the Earth Weather Data factory');
                 scope.earthWeatherServiceErrorHandler();
-                $scope.$broadcast('scroll.refreshComplete');
+                scope.$broadcast('scroll.refreshComplete');
             });
         }
     }
