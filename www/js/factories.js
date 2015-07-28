@@ -29,14 +29,14 @@ app.factory('Factories', function($http, $injector) {
             });
         },
 
-        LocationFromLocationService: function(scope) {
+        LocationFromLocationService: function() {
           var lat = null,
               lng = null;
 
           var options = {
               // enableHighAccuracy: true,
               timeout: 8000,
-              maximumAge: 240000
+              maximumAge: 0
           };
 
           function success(pos) {
