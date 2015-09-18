@@ -217,7 +217,7 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
    }
 
    $scope.share = function() {
-       $cordovaSocialSharing.share('According to Sol, the first interplanetary weather app, it is '+$scope.earthWeather.list[0].temp.day+' outside in '+ $scope.earthWeather.city.name +'. But on Mars, it is '+ $scope.marsWeather.max_temp_fahrenheit, null, 'http://marsweather.ingenology.com/static/home/images/rover.jpg', 'http://solweather.com/');
+       $cordovaSocialSharing.share('According to Sol, the first interplanetary weather app, it is '+$scope.earthWeather.list[0].temp.day+' outside in '+ $scope.earthWeather.city.name +'. But on Mars, it is '+ $scope.marsWeather.max_temp_fahrenheit, null, 'http://marsweather.ingenology.com/static/home/images/rover.jpg', 'http://solweathernow.com/');
    }
 
 }])
@@ -242,7 +242,7 @@ angular.module('sol', ['ionic', 'sol.Factories', 'ngMessages', 'ngCordova'])
             ]
         })
     }
-    
+
     LocationFromLocationServiceErrorHandler = function(msg) {
         var myPopup = $ionicPopup.show({
             template: msg,
