@@ -1,0 +1,46 @@
+<ion-modal-view>
+<ion-content zooming="true" id="settings" class="list list-inset" scroll="true">
+    <h1 class="ion-gear-a" data-pack="default" data-tags="settings, options, cog"> Settings <a class="ion-close-round" ui-sref="planets"></a></h1>
+    <div>
+        <h2>Current Location</h2>
+        <p>Choose how you will show location.</p>
+        <div class="button-bar">
+            <form id="zipCodeForm" ng-class="{'active': isLocator('zip')}" name="zipCodeForm">
+                <input type="tel"
+                       pattern="[0-9]*"
+                       name="zipCode"
+                       class="zipCode"
+                       id="zipCode"
+                       ng-model="zipCode"
+                       ng-minlength="5"
+                       ng-6666="5"
+                       ng-change='setZipCode()'
+                       focus-me="{{shouldBeOpen}}"
+                       >
+                <i ng-class="{'valid' : zipCodeForm.zipCode.$valid}" class="success ion-checkmark">
+                </i>
+                <div ng-messages="zipCodeForm.zipCode.$error" class="error" role="alert">
+                    <div ng-message="maxlength" class="ion-alert"> Just 5 digits please.</div>
+                    <div ng-message="number" class="ion-alert"> Numbers only please.</div>
+                </div>
+            </form>
+            <a class="button" ng-class="{'button-dark': isLocator('device')}" ng-click="setLocator('device')">Device GPS</a>
+            <div class="button" ng-class="{'button-dark': isLocator('zip')}" ng-click="setLocator('zip')">
+                <div>Zip Code</div>
+            </div>
+        </div>
+        <br>
+        <h2>Temperature Scale</h2>
+        <p>Choose imperial or metric.</p>
+        <div class="button-bar">
+            <a class="button" ng-class="{'button-dark': isTempScale('Farenheit')}" ng-click="setTempScale('Farenheit')">Farenheit</a>
+            <a class="button" ng-class="{'button-dark': isTempScale('Celsius')}" ng-click="setTempScale('Celsius')">Celsius</a>
+        </div>
+        <br>        
+        <h2>Acknowledgments</h2>
+        <div class="button-bar">
+            <a class="button" ng-click="openModal()">View</a>
+        </div>
+    </div>
+</ion-content>
+</ion-modal-view>

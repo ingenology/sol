@@ -1,0 +1,12 @@
+{
+  "name": "sol",
+  "app_id": "e484d58c",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
+}

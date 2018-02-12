@@ -1,0 +1,28 @@
+<ion-modal-view>
+    <div id="tutorial" class="modal">
+        <ion-slide-box>
+            <ion-slide>
+            <div class="box blue">
+              <div class="oval"></div>
+              <div class="directions">
+                  <h1>Get Started</h1>
+                  <h2>Touch Mars or Earth for full weather data.</h2>
+              </div>
+              <div class="oval bottom"></div>
+            </div>
+            </ion-slide>
+            <ion-slide>
+              <div class="oval moon"></div>
+              <div class="directions">
+                  <h1>Get Started</h1>
+                  <h2>Tap the Moon to toggle your settings and add your location.</h2>
+              </div>
+            </ion-slide>
+            <ion-slide>
+                <div class="directions">
+                    <button ng-click="finishTutorial(); getWeatherData();" class="button next">Use Sol <i class="ion-chevron-right"></i> <i class="ion-chevron-right"></i> <i class="ion-chevron-right"></i></button>
+                </div>
+            </ion-slide>
+        </ion-slide-box>
+    </div>
+</ion-modal-view>
